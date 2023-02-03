@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roye.project.Dao.TakeOffDao">
+    <resultMap id="checkOff" type="takeOff">
+        <id column="id" property="id"></id>
+        <result column="type" property="type"></result>
+        <result column="reg_time" property="regTime"></result>
+        <result column="back_time" property="backTime"></result>
+        <result column="reason" property="reason"></result>
+        <result column="hr_check" property="hrCheck"></result>
+        <result column="hr_msg" property="hrMsg"></result>
+        <result column="leader_check" property="leaderCheck"></result>
+        <result column="leader_msg" property="leaderMsg"></result>
+    </resultMap>
+    <select id="check" resultMap="checkOff">
+        select * from takeoff where id=#{id}
+    </select>
+
+    <insert id="add" parameterType="takeOff">
+        insert into takeoff(id,type,reg_time,back_time,reason) values (#{id},#{type},#{regtime},#{backtime},#{reason})
+    </insert>
+
+    <delete id="delete" parameterType="string">
+        delete from takeoff where id=#{id} and reg_time=#{regTime}
+    </delete>
+</mapper>

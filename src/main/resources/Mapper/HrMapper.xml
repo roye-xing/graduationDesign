@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roye.project.Dao.HrDao">
+    <resultMap id="staffInDepartment" type="staff">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="birth" property="birth"></result>
+        <result column="salary" property="salary"></result>
+        <result column="perks" property="perks"></result>
+        <association property="departmentName" javaType="department">
+            <result column="department" property="name"></result>
+        </association>
+    </resultMap>
+    <resultMap id="findEvaluate" type="evaluate">
+        <id column="id" property="id"></id>
+        <result column="hr_evaluate" property="hrEvaluate"></result>
+        <result column="hr_score" property="hrScore"></result>
+        <association property="staffName" javaType="evaluate">
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+    <select id="findAllStaff" resultMap="staffInDepartment">
+        SELECT s.id,s.`name`,s.sex,s.birth,d.`name` department,s.salary,s.perks FROM staff s LEFT JOIN department d ON s.department=d.`no`
+    </select>
+
+    <select id="findAllDepartment" resultType="Department">
+        select * from department
+    </select>
+
+    <select id="findStaffByNo" resultMap="staffInDepartment">
+        SELECT s.id,s.`name`,s.sex,s.birth,d.`name` department,s.salary,s.perks FROM staff s LEFT JOIN department d ON s.department=d.`no`
+        <where>
+            <if test="department==''">
+                s.department is null
+            </if>
+            <if test="department!='all' and department !=''">
+                s.department=#{department}
+            </if>
+        </where>
+    </select>
+
+    <select id="findEvaluate" resultMap="findEvaluate">
+        SELECT e.id,s.`name` name,e.hr_evaluate,e.hr_score FROM evaluate e RIGHT JOIN staff s ON e.id=s.id
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roye.project.Dao.StaffDao">
+    <resultMap id="staffInDepartment" type="staff">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="birth" property="birth"></result>
+        <result column="salary" property="salary"></result>
+        <result column="perks" property="perks"></result>
+        <association property="departmentName" javaType="department">
+            <result column="department" property="name"></result>
+        </association>
+    </resultMap>
+    <resultMap id="staffEvaluate" type="evaluate">
+        <id column="id" property="id"></id>
+        <result column="old_evaluate" property="oldEvaluate"></result>
+        <result column="old_works" property="oldWorks"></result>
+        <result column="self_evaluate" property="selfEvaluate"></result>
+        <result column="hr_evaluate" property="hrEvaluate"></result>
+        <result column="self_score" property="selfScore"></result>
+        <result column="hr_score" property="hrScore"></result>
+        <result column="old_score" property="oldScore"></result>
+    </resultMap>
+    <select id="findById" parameterType="string" resultMap="staffInDepartment">
+        select id,s.`name` name,sex,d.`name` department,birth,salary,perks from staff s,department d where s.id=#{id} AND s.department=d.`no`
+    </select>
+
+    <update id="update" parameterType="staff">
+        update staff set name=#{name},sex=#{gender},birth=#{birth} where id=#{id}
+    </update>
+
+    <select id="findEvaluate" parameterType="string" resultMap="staffEvaluate">
+        select old_evaluate,old_works,self_evaluate,hr_evaluate,self_score,hr_score,old_score from evaluate where id=#{id}
+    </select>
+
+    <update id="updateEvaluate" parameterType="evaluate">
+        update evaluate set old_works=#{oldWork},self_evaluate=#{selfMsg},self_score=#{selfScore} where id=#{id}
+    </update>
+</mapper>

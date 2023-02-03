@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+<!--顶部导航栏-->
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow" th:fragment="topbar">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">繁星人才</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="搜索" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" th:href="@{/user/logout}">登出</a>
+        </li>
+    </ul>
+</nav>
+
+<!--侧边栏-->
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="Sidebar">
+    <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item" th:each="menu:${menu}">
+                <a  th:class="(${active}==${menu.menuUrl})?'nav-link active':'nav-link'" th:href="${menu.menuUrl}" th:utext="${menu.icon}+${menu.menuName}">
+                    个人信息
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--警告框-->
+<div th:fragment="alert">
+    <div class="alert alert-success fade show col-sm-9" role="alert" th:if="${state=='editOK'}">
+        <strong>成功！！</strong>执行修改操作成功
+    </div>
+    <div class="alert alert-danger fade show col-sm-9" role="alert" th:if="${state=='editError'}">
+        <strong>错误！！</strong>执行修改操作失败
+    </div>
+    <div class="alert alert-success fade show col-sm-9" role="alert" th:if="${state=='delOK'}">
+        <strong>成功！！</strong>执行删除操作成功
+    </div>
+    <div class="alert alert-danger fade show col-sm-9" role="alert" th:if="${state=='delError'}">
+        <strong>错误！！</strong>执行删除操作失败
+    </div>
+
+
+</div>
+
+
+
+</html>

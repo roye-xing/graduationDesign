@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>繁星人才管理-员工-主页</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+  </head>
+  <body>
+
+  <!--顶部导航栏模板复用-->
+  <div th:replace="~{templates::topbar}"></div>
+
+
+  <div class="container-fluid">
+  <div class="row">
+
+    <!--侧边导航栏模板复用-->
+    <div th:replace="~{templates::Sidebar(active='main')}"></div>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <!--警告框模板复用-->
+      <div th:replace="~{templates::alert}"></div>
+      <h2>个人信息</h2>
+      <form th:each="info:${staffInfo}" th:action="@{/staff/update}" method="post">
+        <div class="form-group row">
+          <label for="id" class="col-sm-2 col-form-label">编号</label>
+          <div class="col-sm-5" >
+            <input type="text" readonly class="form-control-plaintext" id="id" name="id" th:value="${info.id}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">姓名</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="name" name="name" th:value="${info.name}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="gender" class="col-sm-2 col-form-label">性别</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="gender" name="gender" th:value="${info.sex}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="department" class="col-sm-2 col-form-label">部门</label>
+          <div class="col-sm-5">
+            <input type="text" readonly class="form-control-plaintext" id="department" name="department" th:value="${info.departmentName.name}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="birth" class="col-sm-2 col-form-label">出生日期</label>
+          <div class="col-sm-5">
+            <input type="date" class="form-control" id="birth" name="birth" th:value="${#dates.format(info.birth,'yyyy-MM-dd')}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="salary" class="col-sm-2 col-form-label">基本工资</label>
+          <div class="col-sm-2">
+            <input type="text" readonly class="form-control-plaintext" id="salary" th:value="'￥'+${info.salary}">
+          </div>
+          <label for="perks" class="col-sm-2 col-form-label">岗位津贴</label>
+          <div class="col-sm-2">
+            <input type="text" readonly class="form-control-plaintext" id="perks" th:value="'￥'+${info.perks}">
+          </div>
+        </div>
+        <button class="btn btn-info" type="submit">保存修改</button>
+
+
+      </form>
+    </main>
+  </div>
+</div>
+
+
+  <script th:src="@{/js/jquery.slim.min.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/alert.js}"></script>
+        <script th:src="@{/js/feather.min.js}"></script>
+        <script th:src="@{/js/Chart.min.js}"></script>
+        <script th:src="@{/js/list.js}"></script>
+  </body>
+</html>

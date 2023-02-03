@@ -1,0 +1,349 @@
+@charset "utf-8";
+/* CSS Document */
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+/****顶部logo+名称*****/
+.top{
+	width: 100%;
+	height: 54px;
+	background-color: black;
+	float: left;
+}
+.top .logo img{
+	float: left;
+	cursor: pointer;
+}
+.top .mingcheng p{
+	font-size: 20px;
+	color: white;
+	float: left;
+	margin-top: 15px;
+	margin-left: 20px;
+}
+.xingming{
+	color: white;
+	position: absolute;
+	right: 250px;
+	top: 20px;
+}
+.shenfen{
+	color: white;
+	position: absolute;
+	right: 130px;
+	top: 20px;
+}
+.zhuxiao{
+	color: lightgrey;
+	position: absolute;
+	right: 50px;
+	top: 20px;
+	cursor: pointer;
+}
+.zhuxiao:hover{
+	color:white;
+}
+
+
+/****左侧功能栏*****/
+.textarea{
+    width: 850px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    resize: none;
+    background-color: rgba(216,216,216,0.7);
+    border: 0;
+    font-size: 20px;
+    position: absolute;
+    left: 195px;
+    top: 700px;
+}
+.gongnenglan{
+	width: 175px;
+	height: 1540px;
+	background-color:black;
+	float: left;
+}
+
+
+.pingjiachakan p{
+	font-weight: bold;
+	font-size: 28px;
+	color: black;
+	padding-top: 30px;
+	margin-left: 20px;
+	position: absolute;
+	left: 175px;
+	top: 50px;
+}
+
+.zonghepingfen{
+	position: absolute;
+	left: 720px;
+	top: 180px;
+	font-size: 30px;
+}
+
+/****评分柱状图*****/
+@-webkit-keyframes animate-width {
+  0% {
+    width: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+@-moz-keyframes animate-width {
+  0% {
+    width: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+@keyframes animate-width {
+  0% {
+    width: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+@-webkit-keyframes animate-height {
+  0% {
+    height: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+@-moz-keyframes animate-height {
+  0% {
+    height: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+@keyframes animate-height {
+  0% {
+    height: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+#bar-chart {
+  height: 380px;
+  width: 20%;
+  position: relative;
+  margin: 50px auto 0;
+}
+#bar-chart * {
+  box-sizing: border-box;
+}
+#bar-chart .graph {
+  height: 283px;
+  position: relative;
+}
+#bar-chart .bars {
+  height: 253px;
+  padding: 0;
+  position: absolute;
+  width: 150%;
+  z-index: 10;
+}
+#bar-chart .bar-group {
+  display: block;
+  float: left;
+  height: 100%;
+  position: relative;
+  width: 20%;
+}
+#bar-chart .bar-group .bar {
+  visibility: hidden;
+  height: 0;
+  -webkit-animation: animate-height;
+  -moz-animation: animate-height;
+  animation: animate-height;
+  animation-timing-function: cubic-bezier(0.35, 0.95, 0.67, 0.99);
+  -webkit-animation-timing-function: cubic-bezier(0.35, 0.95, 0.67, 0.99);
+  -moz-animation-timing-function: cubic-bezier(0.35, 0.95, 0.67, 0.99);
+  animation-duration: 0.4s;
+  -webkit-animation-duration: 0.4s;
+  -moz-animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.15);
+  border: 1px solid #2d2d2d;
+  border-radius: 3px 3px 0 0;
+  bottom: 0;
+  cursor: pointer;
+  position: absolute;
+  text-align: center;
+  width: 25%;
+}
+
+#bar-chart .bar-group .bar-2 {
+  animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+}
+#bar-chart .bar-group .bar-5 {
+  animation-delay: 0.7s;
+  -webkit-animation-delay: 0.7s;
+}
+#bar-chart .bar-group .bar-8 {
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+}
+#bar-chart .bar-group .bar-11 {
+  animation-delay: 1.3s;
+  -webkit-animation-delay: 1.3s;
+}
+
+#bar-chart ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#bar-chart .x-axis {
+  bottom: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+#bar-chart .x-axis li {
+  float: left;
+  margin-right: 10.5%;
+  font-size: 11px;
+  width: 17%;
+}
+#bar-chart .x-axis li:last-child {
+  margin-right: 0;
+}
+#bar-chart .y-axis {
+  position: absolute;
+  text-align: right;
+  width: 100%;
+}
+#bar-chart .y-axis li {
+  border-top: 1px solid #4e5464;
+  display: block;
+  height: 63.25px;
+  width: 100%;
+}
+#bar-chart .y-axis li span {
+  display: block;
+  font-size: 11px;
+  margin: -10px 0 0 -60px;
+  padding: 0 10px;
+  width: 40px;
+}
+#bar-chart .stat-1 {
+  background-image: linear-gradient(to right, #ff4500 0%, #ff4500 47%, #cf3a02 50%, #cf3a02 100%);
+}
+#bar-chart .stat-2 {
+  background-image: linear-gradient(to right, #b8f123 0%, #b8f123 47%, #79a602 50%, #79a602 100%);
+}
+#bar-chart .stat-3 {
+  background-image: -webkit-linear-gradient(left, #00c5ff 0%, #00c5ff 47%, #0383a9 50%, #0383a9 100%);
+}
+#bar-chart .stat-4 {
+	background-image: -webkit-linear-gradient(left, #F800FF 0%, #F800FF 47%, #9F0099 50%, #9F0099 100%);
+}
+
+/****个人评价需求模块*****/
+.xuqiu{
+	width: 850px;
+	height: 200px;
+	padding: 10px;
+	border-radius: 10px;
+	resize: none;
+	background-color: #D8D8D8;
+	border: 0;
+	font-size: 18px;
+	position: absolute;
+	left: 195px;
+	top: 180px;
+}
+
+/****过往雇主评价*****/
+.xiaobiaoti p{
+	font-weight: bold;
+	font-size: 20px;
+	color: black;
+	position: absolute;
+	left: 197px;
+	top: 420px;
+}
+.gzpingjia{
+	width: 850px;
+	height: 200px;
+	padding: 10px;
+	border-radius: 10px;
+	resize: none;
+	background-color: #D8D8D8;
+	border: 0;
+	font-size: 18px;
+	position: absolute;
+	left: 195px;
+	top: 290px;
+}
+
+/****考勤附件*****/
+.dianjichakan{
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	background-color:cadetblue;
+	color: white;
+	cursor: pointer;
+}
+.dianjichakan:hover{
+	color:#D3D3D3;
+}
+
+/****左侧日历模块*****/
+.calendar{
+    width:175px;
+    height:350px;
+    background:#fff;
+    box-shadow:0px 2px 2px rgba(0,0,0,0.1);
+    position: fixed;
+    left: 0px;
+    top: 400px;
+    border-radius: 10px;
+    border-style:groove;
+}
+.month{
+    text-align: center;
+    color: green;
+}
+.year{
+    text-align: center;
+    color: green;
+}
+.body-list ul{
+    width:100%;
+    font-family:arial;
+    font-weight:bold;
+    font-size:14px;
+}
+.body-list ul li{
+    width:14.28%;
+    height:36px;
+    line-height:36px;
+    list-style-type:none;
+    display:block;
+    box-sizing:border-box;
+    float:left;
+    text-align:center;
+}

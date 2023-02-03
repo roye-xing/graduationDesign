@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>繁星人才管理-员工-评价信息</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+  </head>
+  <body>
+
+  <!--顶部导航栏模板复用-->
+  <div th:replace="~{templates::topbar}"></div>
+
+
+  <div class="container-fluid">
+  <div class="row">
+
+    <!--侧边导航栏模板复用-->
+    <div th:replace="~{templates::Sidebar(active='evaluate')}"></div>
+
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <!--警告框模板复用-->
+      <div th:replace="~{templates::alert}"></div>
+
+      <h2>员工评价</h2>
+      <div>
+        <canvas id="canvas" class="col-md-10"></canvas>
+      </div>
+      <form th:each="info:${evaluates}" th:action="@{/staff/evaluate/update}">
+        <div class="form-group">
+          <label for="works" class="col-form-label">就职经历</label>
+          <textarea id="works" class="form-control" th:text="${info.oldWorks}" name="oldWork"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="old_evaluate" class="col-form-label">过往雇主评价</label>
+          <textarea id="old_evaluate" readonly class="form-control-plaintext" th:text="${info.oldEvaluate}"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="hr_evaluate" class="col-form-label">HR评价</label>
+          <textarea id="hr_evaluate" readonly class="form-control-plaintext" th:text="${info.hrEvaluate}"></textarea>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group">
+            <label for="selfScore" class="col-form-label">自我评分</label>
+            <input type="number" class="form-control" max="100" min="10" name="selfScore" id="selfScore" th:value="${info.selfScore}">
+          </div>
+          <label for="self_evaluate" class="col-form-label">自我评价</label>
+          <textarea id="self_evaluate" class="form-control" name="selfText" th:text="${info.selfEvaluate}"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">保存修改</button>
+      </form>
+    </main>
+  </div>
+</div>
+
+
+  <script th:src="@{/js/jquery.slim.min.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/alert.js}"></script>
+  <script th:src="@{/js/Chart.min.js}"></script>
+  <script th:inline="javascript" th:each="info:${evaluates}">
+    var selfscore=[[${info.selfScore}]]
+    var hrscore=[[${info.hrScore}]]
+    var oldscore=[[${info.oldScore}]]
+  </script>
+  <script th:src="@{/js/evaluate.Chart.js}"></script>
+  <script th:src="@{/js/feather.min.js}"></script>
+  <script th:src="@{/js/list.js}"></script>
+  </body>
+</html>
