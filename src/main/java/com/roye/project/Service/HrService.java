@@ -38,4 +38,8 @@ public class HrService {
     public List<TakeOff> findAllTakeOff(){
         return hrDao.findAllTakeOff();
     }
+    public boolean updateTakeOff(int check,String uuid){
+        hrDao.updateTakeOff(check,uuid);
+        return true;
+    }
 }

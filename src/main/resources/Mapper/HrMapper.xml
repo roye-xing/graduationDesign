@@ -67,11 +67,16 @@
         <result column="reg_time" property="regTime"></result>
         <result column="back_time" property="backTime"></result>
         <result column="hr_check" property="hrCheck"></result>
+        <result column="uuid" property="uuid"></result>
         <association property="name" javaType="staff">
             <result column="name" property="name"></result>
         </association>
     </resultMap>
     <select id="findAllTakeOff" resultMap="findAllTakeOff">
-        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.hr_check,t.reason from staff s,takeoff t where s.id=t.id
+        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.hr_check,t.reason,t.uuid from staff s,takeoff t where s.id=t.id
     </select>
+
+    <update id="updateTakeOff">
+        update takeoff set hr_check=#{check} where uuid=#{uuid}
+    </update>
 </mapper>

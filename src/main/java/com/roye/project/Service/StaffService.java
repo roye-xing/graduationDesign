@@ -35,8 +35,8 @@ public class StaffService {
         return true;
     }
     //请假操作
-    public boolean addTakeOff(String id, String type, Timestamp regtime,Timestamp backtime,String reason) {
-        takeOffDao.add(id,type,regtime,backtime,reason);
+    public boolean addTakeOff(String id, String type, Timestamp regtime,Timestamp backtime,String reason,String uuid) {
+        takeOffDao.add(id,type,regtime,backtime,reason,uuid);
         return true;
     }
     public boolean delTakeOff(String id,String regTime){

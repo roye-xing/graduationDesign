@@ -17,7 +17,7 @@
     </select>
 
     <insert id="add" parameterType="takeOff">
-        insert into takeoff(id,type,reg_time,back_time,reason) values (#{id},#{type},#{regtime},#{backtime},#{reason})
+        insert into takeoff(id,type,reg_time,back_time,reason,uuid) values (#{id},#{type},#{regtime},#{backtime},#{reason},#{uuid})
     </insert>
 
     <delete id="delete" parameterType="string">

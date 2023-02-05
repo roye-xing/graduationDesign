@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,5 +71,14 @@ public class HrController {
         model.addAttribute("menu",MenuConfig.HrMenu());
         model.addAttribute("takeoff",list);
         return "user/hr/takeOff";
+    }
+    @RequestMapping(value="/hr/takeOff/{type}/{uuid}")
+    public String updateTakeOff(@PathVariable String type,@PathVariable String uuid){
+        if (type.equals("agree")){
+            hrService.updateTakeOff(1,uuid);
+        }else{
+            hrService.updateTakeOff(2,uuid);
+        }
+        return "redirect:/hr/takeOff";
     }
 }

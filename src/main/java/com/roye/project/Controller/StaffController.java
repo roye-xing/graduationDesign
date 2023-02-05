@@ -6,6 +6,7 @@ import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import com.roye.project.Service.StaffService;
 import com.roye.project.Util.TimeUtil;
+import com.roye.project.Util.UUIDUtil;
 import com.roye.project.config.MenuConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import java.util.List;
 @Controller
 public class StaffController {
     TimeUtil timeUtil;
+    UUIDUtil uuidUtil;
     @Autowired
     StaffService staffService;
     @RequestMapping ("/staff/main")//PASS
@@ -83,7 +85,8 @@ public class StaffController {
         String id=(String) session.getAttribute("loginUser");
         Timestamp sql_regtime= timeUtil.timechange(regtime);
         Timestamp sql_backtime= timeUtil.timechange(backtime);
-        staffService.addTakeOff(id,type,sql_regtime,sql_backtime,reason);
+        String uuid=uuidUtil.getUUID();
+        staffService.addTakeOff(id,type,sql_regtime,sql_backtime,reason,uuid);
         return "redirect:/staff/takeOff";
     }
     @RequestMapping(value="/staff/takeOff/delete/{id}/{regTime}")//clear

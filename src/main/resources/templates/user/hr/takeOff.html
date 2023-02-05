@@ -74,10 +74,11 @@
             <td th:text="${list.backTime}">返回时间</td>
             <td th:text="${list.hrCheck}=='0'?'待审批':(${list.hrCheck}=='1'?'同意':'驳回')">hr审批</td>
             <td style="display: none" th:text="${list.reason}"></td>
+            <td style="display: none" th:text="${list.uuid}"></td>
             <td>
               <input type="button" id="checkButton" onclick="view_function(this)" data-toggle="modal" data-target="#viewModal" data-whatever="查看" class="btn btn-primary" value="查看">
-              <a class="btn btn-success">同意</a>
-              <a class="btn btn-danger">驳回</a>
+              <button th:onclick="window.location.href='/roye/hr/takeOff/agree/'+[[${list.uuid}]]" class="btn btn-success" th:disabled="${list.hrCheck}!='0'">同意</button><!--浏览器解析成功，无视编译器报错-->
+              <button th:onclick="window.location.href='/roye/hr/takeOff/disagree/'+[[${list.uuid}]]" class="btn btn-danger" th:disabled="${list.hrCheck}!='0'">驳回</button><!--浏览器解析成功，无视编译器报错-->
             </td>
           </tr>
           </tbody>

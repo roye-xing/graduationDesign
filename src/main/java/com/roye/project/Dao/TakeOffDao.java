@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface TakeOffDao {
     //新增事假
-    int add(String id, String type, Timestamp regtime,Timestamp backtime,String reason);
+    int add(String id, String type, Timestamp regtime,Timestamp backtime,String reason,String uuid);
     //修改事假
     //查看事假
     List<TakeOff> check(String id);

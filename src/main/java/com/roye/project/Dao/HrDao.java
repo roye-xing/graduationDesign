@@ -17,4 +17,5 @@ public interface HrDao {
     public List<Evaluate> findEvaluate(String search,String type);
     public boolean updateEvaluate(String hrEvaluate,int hrScore,String id);
     List<TakeOff> findAllTakeOff();
+    boolean updateTakeOff(int check,String uuid);
 }
