@@ -16,7 +16,7 @@
         <id column="id" property="id"></id>
         <result column="hr_evaluate" property="hrEvaluate"></result>
         <result column="hr_score" property="hrScore"></result>
-        <association property="staffName" javaType="evaluate">
+        <association property="staffName" javaType="staff">
             <result column="name" property="name"></result>
         </association>
     </resultMap>
@@ -42,5 +42,36 @@
 
     <select id="findEvaluate" resultMap="findEvaluate">
         SELECT e.id,s.`name` name,e.hr_evaluate,e.hr_score FROM evaluate e RIGHT JOIN staff s ON e.id=s.id
+        <where>
+            <if test="type == 'id' and search != ''">
+                e.id=#{search}
+            </if>
+            <if test="type == 'name' and search!=''">
+                `name` like concat('%',+#{search},'%')
+            </if>
+        </where>
+    </select>
+
+    <update id="updateEvaluate" parameterType="evaluate">
+        update evaluate set hr_score=#{hrScore},hr_evaluate=#{hrEvaluate} where id=#{id}
+    </update>
+
+    <update id="updateStaff" parameterType="staff">
+        update staff set department=#{department},salary=#{salary},perks=#{perks} where id=#{id}
+    </update>
+
+    <resultMap id="findAllTakeOff" type="takeoff">
+        <id column="id" property="id"></id>
+        <result column="type" property="type"></result>
+        <result column="reason" property="reason"></result>
+        <result column="reg_time" property="regTime"></result>
+        <result column="back_time" property="backTime"></result>
+        <result column="hr_check" property="hrCheck"></result>
+        <association property="name" javaType="staff">
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+    <select id="findAllTakeOff" resultMap="findAllTakeOff">
+        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.hr_check,t.reason from staff s,takeoff t where s.id=t.id
     </select>
 </mapper>

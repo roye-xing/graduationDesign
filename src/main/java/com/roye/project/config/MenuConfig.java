@@ -44,11 +44,13 @@ public class MenuConfig {
         menu2.setMenuUrl("evaluate");
 
         Menu menu3=new Menu();
-        menu3.setMenuName("事务处理");
+        menu3.setMenuName("事假处理");
         menu3.setIcon("<span data-feather='layers'></span>");
+        menu3.setMenuUrl("takeOff");
 
         list.add(menu1);
         list.add(menu2);
+        list.add(menu3);
         return list;
     }
     public static List<Menu> LeaderMenu(){

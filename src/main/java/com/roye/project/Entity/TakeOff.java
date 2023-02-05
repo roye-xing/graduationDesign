@@ -4,6 +4,16 @@ import java.sql.Timestamp;
 
 public class TakeOff {
     private String id;
+    private Staff name;
+
+    public Staff getName() {
+        return name;
+    }
+
+    public void setName(Staff name) {
+        this.name = name;
+    }
+
     private String type;
     private Timestamp regTime;
     private Timestamp backTime;

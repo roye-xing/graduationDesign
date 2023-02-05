@@ -6,10 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
-    <title>Dashboard Template · Bootstrap v4.6</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
-
+    <title>繁星人才管理-HR-主页</title>
     
 
     <!-- Bootstrap core CSS -->
@@ -50,9 +47,12 @@
     <!--侧边导航栏模板复用-->
     <div th:replace="templates::Sidebar(active='main')"></div>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <!--警告框模板复用-->
+      <div th:replace="~{templates::alert}"></div>
+
       <h2>员工列表</h2>
       <div class="table-responsive">
-        <form th:action="@{/hr/main}" method="post">
+        <form th:action="@{/hr/main}" method="get">
           <select  class="form-group form-control-sm" id="department" name="department">
             <option value="all">全部</option>
             <option value="" th:selected="${selected}==''">未指定</option>
@@ -79,7 +79,7 @@
               <td th:text="${list.id}">1,001</td>
               <td th:text="${list.name}">random</td>
               <td th:text="${list.sex}">data</td>
-              <td th:text="${list.birth}">data</td>
+              <td th:text="${#dates.format(list.birth,'yyyy-MM-dd')}">data</td>
               <td th:text="${list.departmentName}==null?'未指定':${list.departmentName.name}">data</td>
               <td th:text="${list.salary}">data</td>
               <td th:text="${list.perks}">data</td>
@@ -127,30 +127,36 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              <form>
+            <form th:action="@{/hr/main/update}" method="post">
+              <div class="modal-body">
                 <div class="form-group">
                   <label for="staffId" class="col-form-label">编号</label>
-                  <input type="text" class="form-control" id="staffId">
+                  <input type="text" readonly class="form-control" id="staffId" name="id">
                 </div>
                 <div class="form-group">
                   <label for="staffName" class="col-form-label">姓名</label>
-                  <input type="text" class="form-control" id="staffName">
+                  <input type="text" readonly class="form-control" id="staffName">
+                </div>
+                <div class="form-group">
+                  <label for="depa" class="col-form-label">部门</label>
+                  <select class="form-control" id="depa" name="depa">
+                    <option th:each="Deps:${departmentList}" th:value="${Deps.no}" th:text="${Deps.name}" id="options" ></option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="staffSalary" class="col-form-label" >基本工资</label>
-                  <input id="staffSalary" type="text" class="form-control">
+                  <input id="staffSalary" type="text" class="form-control" name="salary">
                 </div>
                 <div class="form-group">
                   <label for="staffPerks" class="col-form-label" >岗位补贴</label>
-                  <input id="staffPerks" type="text" class="form-control">
+                  <input id="staffPerks" type="text" class="form-control" name="perks">
                 </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">确认</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            </div>
+              </div>
+             <div class="modal-footer">
+                <button type="submin" class="btn btn-primary">确认</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -184,6 +190,7 @@
       var $td=$(obj).parent().parent().find('td')
       var id=$td.eq(0).text();
       var name=$td.eq(1).text();
+      var department=$td.eq(4).text();
       var salary=$td.eq(5).text();
       var perks=$td.eq(6).text();
 
@@ -191,6 +198,13 @@
       $('#staffName').val(name);
       $('#staffSalary').val(salary);
       $('#staffPerks').val(perks);
+
+      var data=document.getElementById("depa");
+      for (var i=0;i<data.length;i++){
+        if (department==data.options[i].text){
+          data.options[i].selected='selected';
+        }
+      }
     }
   </script>
   </body>
