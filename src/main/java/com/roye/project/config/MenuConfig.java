@@ -56,6 +56,23 @@ public class MenuConfig {
     public static List<Menu> LeaderMenu(){
         List<Menu> list=new ArrayList<Menu>();
 
+        Menu menu1=new Menu();
+        menu1.setMenuName("公司信息");
+        menu1.setIcon("<span date-feather=''></span>");
+        menu1.setMenuUrl("main");
+
+        Menu menu2=new Menu();
+        menu2.setMenuName("成员管理");
+
+        Menu menu3=new Menu();
+        menu3.setMenuName("事假处理");
+        menu3.setIcon("<span data-feather='layers'></span>");
+        menu3.setMenuUrl("takeOff");
+
+        list.add(menu1);
+        list.add(menu2);
+        list.add(menu3);
+
         return list;
     }
 }

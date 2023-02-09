@@ -6,9 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
-    <title>Dashboard Template · Bootstrap v4.6</title>
+    <title>繁星人才管理-领导-主页</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
 
     
 
@@ -48,136 +47,42 @@
   <div class="row">
 
     <!--侧边导航栏模板复用-->
-    <div th:replace="templates::StaffSidebar"></div>
+    <div th:replace="~{templates::Sidebar(active='main')}"></div>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <h2>Section title</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>data</td>
-              <td>rich</td>
-              <td>dashboard</td>
-              <td>tabular</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td>illustrative</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,004</td>
-              <td>text</td>
-              <td>random</td>
-              <td>layout</td>
-              <td>dashboard</td>
-            </tr>
-            <tr>
-              <td>1,005</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td>text</td>
-              <td>placeholder</td>
-            </tr>
-            <tr>
-              <td>1,006</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td>rich</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,007</td>
-              <td>placeholder</td>
-              <td>tabular</td>
-              <td>information</td>
-              <td>irrelevant</td>
-            </tr>
-            <tr>
-              <td>1,008</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,009</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
-            <tr>
-              <td>1,010</td>
-              <td>data</td>
-              <td>rich</td>
-              <td>dashboard</td>
-              <td>tabular</td>
-            </tr>
-            <tr>
-              <td>1,011</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td>illustrative</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,012</td>
-              <td>text</td>
-              <td>placeholder</td>
-              <td>layout</td>
-              <td>dashboard</td>
-            </tr>
-            <tr>
-              <td>1,013</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td>text</td>
-              <td>visual</td>
-            </tr>
-            <tr>
-              <td>1,014</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td>rich</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>random</td>
-              <td>tabular</td>
-              <td>information</td>
-              <td>text</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div th:replace="~{templates::alert}"></div>
+      <h2>公司信息</h2>
+      <form th:each="info:${company}" th:action="@{/leader/update}" method="post">
+        <div class="form-group row">
+          <label for="id" class="col-sm-2 col-form-label">公司编号</label>
+          <div class="col-sm-5" >
+            <input type="text" readonly class="form-control-plaintext" id="id" name="id" th:value="${info.id}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">公司名称</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="name" name="name" th:value="${info.name}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="gender" class="col-sm-2 col-form-label">公司电话</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" id="gender" name="gender" th:value="${info.tel}">
+            </div>
+          </div>
+
+        <div class="form-group row">
+          <label for="department" class="col-sm-2 col-form-label">公司地址</label>
+          <div class="col-sm-5">
+            <input type="text" readonly class="form-control-plaintext" id="department" name="department" th:value="${info.address}">
+          </div>
+        </div>
+        <button class="btn btn-info" type="submit">保存修改</button>
+
+
+      </form>
+
     </main>
   </div>
 </div>

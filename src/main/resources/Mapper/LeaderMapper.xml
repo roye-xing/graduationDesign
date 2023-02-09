@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roye.project.Dao.LeaderDao">
+    <select id="findCompanyInfo" resultType="company">
+        SELECT c.id,c.`name`,c.tel,c.address,c.edit_time FROM company c LEFT JOIN users u ON c.id=u.company_id WHERE u.username=#{id}
+    </select>
+    <resultMap id="findAllTakeOff" type="takeoff">
+        <id column="id" property="id"></id>
+        <result column="type" property="type"></result>
+        <result column="reason" property="reason"></result>
+        <result column="reg_time" property="regTime"></result>
+        <result column="back_time" property="backTime"></result>
+        <result column="leader_check" property="leaderCheck"></result>
+        <result column="uuid" property="uuid"></result>
+        <association property="name" javaType="staff">
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+    <select id="findAllTakeOff" resultMap="findAllTakeOff">
+        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.leader_check,t.reason,t.uuid from staff s,takeoff t where s.id=t.id
+    </select>
+
+    <update id="updateTakeOff">
+        update takeoff set leader_check=#{check} where uuid=#{uuid}
+    </update>
+</mapper>

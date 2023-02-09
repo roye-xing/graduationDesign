@@ -42,17 +42,17 @@
                 <!--身份选择-->
                 <div id="radio">
                     <div>
-                        <input type="radio" id="staff" name="power" value="staff" checked>
+                        <input type="radio" id="staff" name="power" value="staff" th:checked="${selected}=='staff'">
                         <label for="staff">员工</label>
                     </div>
 
                     <div>
-                        <input type="radio" id="hr" name="power" value="hr">
+                        <input type="radio" id="hr" name="power" value="hr" th:checked="${selected}=='hr'">
                         <label for="hr">HR</label>
                     </div>
 
                     <div>
-                        <input type="radio" id="leader" name="power" value="leader">
+                        <input type="radio" id="leader" name="power" value="leader" th:checked="${selected}=='leader'">
                         <label for="leader">领导</label>
                     </div>
                 </div>

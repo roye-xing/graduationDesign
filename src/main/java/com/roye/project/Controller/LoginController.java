@@ -43,14 +43,17 @@ public class LoginController {
                     session.setAttribute("loginUser",username);
                     return "redirect:/hr/main";
                 }else{
+                    session.setAttribute("loginUser",username);
                     return "redirect:/leader/main";
                 }
             }else {
+                model.addAttribute("selected",power);
                 model.addAttribute("msg","验证码错误");
                 return "main/index";
             }
 
         }else {
+            model.addAttribute("selected",power);
             model.addAttribute("msg","请检查身份、用户名或密码是否有误");
             return "main/index";
         }

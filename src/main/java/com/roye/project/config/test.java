@@ -12,6 +12,7 @@ public class test {
     public static void main(String[] args){
         UUIDUtil uuidUtil = null;
         String uuid=uuidUtil.getUUID();
-        System.out.println(uuid);
+        String uuid2=uuidUtil.eightUUID();
+        System.out.println(uuid2);
     }
 }
