@@ -24,8 +24,8 @@ public class LeaderService {
     public List<TakeOff> findAllTakeOff(){
         return leaderDao.findAllTakeOff();
     }
-    public boolean updateTakeOff(int check,String uuid){
-        leaderDao.updateTakeOff(check,uuid);
+    public boolean updateTakeOff(int check,String uuid,String msg){
+        leaderDao.updateTakeOff(check,uuid,msg);
         return true;
     }
 }

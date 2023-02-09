@@ -34,14 +34,9 @@ public class LeaderController {
 
         return "user/leader/takeOff";
     }
-    @RequestMapping(value="/leader/takeOff/{type}/{uuid}")
-    public String updateTakeOff(@PathVariable String type, @PathVariable String uuid){
-        if (type.equals("agree")){
-            leaderService.updateTakeOff(1,uuid);
-        }else{
-            leaderService.updateTakeOff(2,uuid);
-        }
+    @RequestMapping("/leader/takeOff/check")
+    public String leaderCheck(int check,String uuid,String msg){
+        leaderService.updateTakeOff(check,uuid,msg);
         return "redirect:/leader/takeOff";
     }
-
 }

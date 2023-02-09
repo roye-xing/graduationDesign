@@ -21,6 +21,6 @@
     </select>
 
     <update id="updateTakeOff">
-        update takeoff set leader_check=#{check} where uuid=#{uuid}
+        update takeoff set leader_check=#{check},leader_msg=#{msg} where uuid=#{uuid}
     </update>
 </mapper>

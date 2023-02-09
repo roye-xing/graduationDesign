@@ -12,5 +12,5 @@ public interface LeaderDao {
     List<Company> findCompanyInfo(String id);
     boolean updateComapanyInfo(String name, String tel, String address, Timestamp editTime);
     public List<TakeOff> findAllTakeOff();
-    boolean updateTakeOff(int check,String uuid);
+    boolean updateTakeOff(int check,String uuid,String msg);
 }

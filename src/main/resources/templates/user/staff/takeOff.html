@@ -73,8 +73,11 @@
             <td th:text="${info.backTime}">返回时间</td>
             <td th:text="${info.hrCheck}=='0'?'处理中':(${info.hrCheck}=='1'?'同意':'驳回')">hr审批</td>
             <td th:text="${info.leaderCheck}=='0'?'处理中':(${info.leaderCheck}=='1'?'同意':'驳回')">领导审批</td>
+            <td style="display: none" th:text="${info.reason}"></td>
+            <td style="display: none" th:text="${info.hrMsg}"></td>
+            <td style="display: none" th:text="${info.leaderMsg}"></td>
             <td>
-              <input type="button" id="checkButton" data-toggle="modal" data-target="#checkModal" data-whatever="查看" class="btn btn-primary" value="查看">
+              <input type="button" onclick="view_function(this)" id="checkButton" data-toggle="modal" data-target="#checkModal" data-whatever="查看" class="btn btn-primary" value="查看">
               <a class="btn btn-danger" th:href="@{'/staff/takeOff/delete/'+${info.id}+'/'+${info.regTime}}">删除</a>
             </td>
           </tr>
@@ -96,7 +99,7 @@
               <form th:action="@{/staff/takeOff/add}" method="post">
                 <div class="form-group">
                   <label for="type" class="col-form-label">请假类型</label>
-                  <select name="type" id="type" class="form-control">
+                  <select name="type" class="form-control">
                     <option value="病假">病假</option>
                     <option value="事假">事假</option>
                     <option value="其他">其他</option>
@@ -104,21 +107,68 @@
                 </div>
                 <div class="form-group">
                   <label for="regtime" class="col-form-label">申请时间</label>
-                  <input type="datetime-local" class="form-control"name="regtime" id="regtime">
+                  <input type="datetime-local" class="form-control"name="regtime">
                 </div>
                 <div class="form-group">
                   <label for="backtime" class="col-form-label" >返回时间</label>
-                  <input name="backtime" id="backtime" type="datetime-local" class="form-control">
+                  <input name="backtime"  type="datetime-local" class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="reason" class="col-form-label">请假原因</label>
-                  <textarea name="reason" id="reason" class="form-control"></textarea>
+                  <textarea name="reason"  class="form-control"></textarea>
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-primary" >确认</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--查看模态框-->
+      <div class="modal fade" id="checkModal" tabindex="-1" aria-labelledby="checkModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="checkModalLabel">查看</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="type" class="col-form-label">请假类型</label>
+                  <select name="type" id="type" class="form-control" disabled>
+                    <option value="病假">病假</option>
+                    <option value="事假">事假</option>
+                    <option value="其他">其他</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="regtime" class="col-form-label">申请时间</label>
+                  <input type="datetime-local" class="form-control" id="regtime" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="backtime" class="col-form-label" >返回时间</label>
+                  <input id="backtime" type="datetime-local" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="reason" class="col-form-label">请假原因</label>
+                  <textarea  id="reason" class="form-control" readonly></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="hrMsg" class="col-form-label">hr留言</label>
+                  <textarea id="hrMsg" class="form-control" readonly></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="leaderMsg" class="col-form-label">领导留言</label>
+                  <textarea id="leaderMsg" class="form-control" readonly></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
             </div>
           </div>
         </div>
@@ -135,6 +185,23 @@
   <script th:src="@{/js/feather.min.js}"></script>
   <script th:src="@{/js/Chart.min.js}"></script>
   <script th:src="@{/js/list.js}"></script>
+  <script type="text/javascript">
+    function view_function(obj){
+      var $td=$(obj).parent().parent().find('td')
+      var type=$td.eq(1).text();
+      var regTime=$td.eq(2).text();
+      var backTime=$td.eq(3).text();
+      var reason=$td.eq(6).text();
+      var hrMsg=$td.eq(7).text();
+      var leaderMsg=$td.eq(8).text()
+      $('#type').val(type)
+      $('#regtime').val(regTime)
+      $('#backtime').val(backTime)
+      $('#reason').val(reason)
+      $('#hrMsg').val(hrMsg)
+      $('#leaderMsg').val(leaderMsg)
+    }
 
+  </script>
   </body>
 </html>
