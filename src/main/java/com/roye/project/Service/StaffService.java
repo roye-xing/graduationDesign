@@ -39,8 +39,8 @@ public class StaffService {
         takeOffDao.add(id,type,regtime,backtime,reason,uuid);
         return true;
     }
-    public boolean delTakeOff(String id,String regTime){
-        takeOffDao.delete(id,regTime);
+    public boolean delTakeOff(String uuid){
+        takeOffDao.delete(uuid);
         return true;
     }
     public List<TakeOff> checkTakeOff(String no){return takeOffDao.check(no);}

@@ -3,6 +3,7 @@ package com.roye.project.Service;
 
 import com.roye.project.Dao.LeaderDao;
 import com.roye.project.Entity.Company;
+import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,8 @@ public class LeaderService {
     public boolean updateTakeOff(int check,String uuid,String msg){
         leaderDao.updateTakeOff(check,uuid,msg);
         return true;
+    }
+    public List<Staff> findAllMembers(){
+        return leaderDao.findAllMembers();
     }
 }

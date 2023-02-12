@@ -11,7 +11,6 @@ import java.util.List;
 public class test {
     public static void main(String[] args){
         UUIDUtil uuidUtil = null;
-        String uuid=uuidUtil.getUUID();
         String uuid2=uuidUtil.eightUUID();
         System.out.println(uuid2);
     }

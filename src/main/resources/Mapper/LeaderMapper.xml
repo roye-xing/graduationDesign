@@ -23,4 +23,20 @@
     <update id="updateTakeOff">
         update takeoff set leader_check=#{check},leader_msg=#{msg} where uuid=#{uuid}
     </update>
+    
+    <resultMap id="findAllMembers" type="staff">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="salary" property="salary"></result>
+        <result column="perks" property="perks"></result>
+        <association property="departmentName" javaType="department">
+            <result column="department" property="name"></result>
+        </association>
+        <association property="type" javaType="user">
+            <result column="type" property="power"></result>
+        </association>
+    </resultMap>
+    <select id="findAllMembers" resultMap="findAllMembers">
+        SELECT s.id,s.`name`,d.`name` department,s.salary,s.perks,u.usertype type FROM staff s left JOIN users u ON u.username=s.id left JOIN department d ON s.department=d.no
+    </select>
 </mapper>

@@ -14,6 +14,15 @@ public class Staff {
     private BigDecimal perks;
 
     private Department departmentName;
+    private User type;
+
+    public User getType() {
+        return type;
+    }
+
+    public void setType(User type) {
+        this.type = type;
+    }
 
     public Department getDepartmentName() {
         return departmentName;

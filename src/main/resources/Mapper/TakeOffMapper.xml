@@ -21,6 +21,6 @@
     </insert>
 
     <delete id="delete" parameterType="string">
-        delete from takeoff where id=#{id} and reg_time=#{regTime}
+        delete from takeoff where uuid=#{uuid}
     </delete>
 </mapper>

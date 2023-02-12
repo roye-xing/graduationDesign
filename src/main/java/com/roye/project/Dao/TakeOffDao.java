@@ -13,5 +13,5 @@ public interface TakeOffDao {
     //查看事假
     List<TakeOff> check(String id);
     //删除事假
-    int delete(String id,String regTime);
+    int delete(String uuid);
 }

@@ -1,7 +1,9 @@
 package com.roye.project.Controller;
 
 import com.roye.project.Entity.Company;
+import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
+import com.roye.project.Service.HrService;
 import com.roye.project.Service.LeaderService;
 import com.roye.project.config.MenuConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.List;
 public class LeaderController {
     @Autowired
     LeaderService leaderService;
+    @Autowired
+    HrService hrService;
     @RequestMapping("/leader/main")
     public String main(Model model, HttpSession session){
         String username=(String)session.getAttribute("loginUser");
@@ -38,5 +42,13 @@ public class LeaderController {
     public String leaderCheck(int check,String uuid,String msg){
         leaderService.updateTakeOff(check,uuid,msg);
         return "redirect:/leader/takeOff";
+    }
+    @RequestMapping("/leader/members")
+    public String members(Model model){
+        List<Staff> list=leaderService.findAllMembers();
+        model.addAttribute("menu",MenuConfig.LeaderMenu());
+        model.addAttribute("members",list);
+        model.addAttribute("departmentList",hrService.findAllDepartment());
+        return "user/leader/members";
     }
 }

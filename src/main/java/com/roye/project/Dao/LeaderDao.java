@@ -1,6 +1,7 @@
 package com.roye.project.Dao;
 
 import com.roye.project.Entity.Company;
+import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,5 @@ public interface LeaderDao {
     boolean updateComapanyInfo(String name, String tel, String address, Timestamp editTime);
     public List<TakeOff> findAllTakeOff();
     boolean updateTakeOff(int check,String uuid,String msg);
+    List<Staff> findAllMembers();
 }

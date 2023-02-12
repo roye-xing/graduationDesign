@@ -89,9 +89,9 @@ public class StaffController {
         staffService.addTakeOff(id,type,sql_regtime,sql_backtime,reason,uuid);
         return "redirect:/staff/takeOff";
     }
-    @RequestMapping(value="/staff/takeOff/delete/{id}/{regTime}")//clear
-    public String delTakeOff(@PathVariable String id,@PathVariable String regTime,RedirectAttributes attributes){
-        if (staffService.delTakeOff(id,regTime)){
+    @RequestMapping(value="/staff/takeOff/delete/{uuid}")//clear
+    public String delTakeOff(@PathVariable String uuid,RedirectAttributes attributes){
+        if (staffService.delTakeOff(uuid)){
             attributes.addFlashAttribute("state","delOK");
         }else {
             attributes.addFlashAttribute("state","delError");

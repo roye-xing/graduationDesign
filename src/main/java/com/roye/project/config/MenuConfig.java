@@ -58,11 +58,13 @@ public class MenuConfig {
 
         Menu menu1=new Menu();
         menu1.setMenuName("公司信息");
-        menu1.setIcon("<span date-feather=''></span>");
+        menu1.setIcon("<span data-feather='home'></span>");
         menu1.setMenuUrl("main");
 
         Menu menu2=new Menu();
         menu2.setMenuName("成员管理");
+        menu2.setIcon("<span data-feather='users'></span>");
+        menu2.setMenuUrl("members");
 
         Menu menu3=new Menu();
         menu3.setMenuName("事假处理");
