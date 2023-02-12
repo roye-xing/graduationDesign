@@ -71,7 +71,7 @@
               <td>
                 <button class="btn btn-info" onclick="view_function(this)" id="view_btn" data-whatever="查看" data-toggle="modal" data-target="#exampleModal">查看</button>
                 <button class="btn btn-primary" onclick="edit_function(this)" id="edit_btn" data-whatever="修改" data-toggle="modal" data-target="#exampleModal">修改</button>
-                <button class="btn btn-danger">解除关系</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">解除关系</button>
               </td>
             </tr>
           </tbody>
@@ -129,6 +129,32 @@
           </div>
         </div>
       </div>
+      <!--留言模态框-->
+      <div class="modal fade" id="confirmModal" tabindex="0" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">雇主留言</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/leader/members/quit}" method="post">
+                <div class="form-group">
+                  <label for="msg"><strong style="color: red">注意！！！</strong>请确认员工申请离职后再提交留言</label>
+                  <input type="text" id="id" name="id" style="display: none">
+                  <textarea id="msg" name="msg" class="form-control"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">确认</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </main>
   </div>
@@ -159,6 +185,7 @@
           var type=$td.eq(5).text();
 
           $('#staffId').val(id);
+          $('#id').val(id);
           $('#staffName').val(name);
           $('#staffSalary').val(salary);
           $('#staffPerks').val(perks);

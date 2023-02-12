@@ -51,4 +51,5 @@ public class LeaderController {
         model.addAttribute("departmentList",hrService.findAllDepartment());
         return "user/leader/members";
     }
+    @RequestMapping("/leader/members/quit")
 }
