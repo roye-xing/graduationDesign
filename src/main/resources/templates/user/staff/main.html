@@ -8,10 +8,6 @@
     <meta name="generator" content="Hugo 0.101.0">
     <title>繁星人才管理-员工-主页</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
-
-    
-
     <!-- Bootstrap core CSS -->
 <link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
 
@@ -74,11 +70,16 @@
             <input type="text" class="form-control" id="gender" name="gender" th:value="${info.sex}">
           </div>
         </div>
-
+        <div class="form-group row">
+          <label for="state" class="col-sm-2 col-form-label">状态</label>
+          <div class="col-sm-5">
+            <span id="state" th:text="${info.companyId}==null?'未就职':'就职中'" th:class="${info.companyId}==null?'badge badge-danger':'badge badge-success'" style="margin-top: 10px"></span>
+          </div>
+        </div>
         <div class="form-group row">
           <label for="department" class="col-sm-2 col-form-label">部门</label>
           <div class="col-sm-5">
-            <input type="text" readonly class="form-control-plaintext" id="department" name="department" th:value="${info.departmentName.name}">
+            <input type="text" readonly class="form-control-plaintext" id="department" name="department" th:value="${info.departmentName}==null?'-':${info.departmentName.name}">
           </div>
         </div>
 

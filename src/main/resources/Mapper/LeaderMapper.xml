@@ -37,6 +37,13 @@
         </association>
     </resultMap>
     <select id="findAllMembers" resultMap="findAllMembers">
-        SELECT s.id,s.`name`,d.`name` department,s.salary,s.perks,u.usertype type FROM staff s left JOIN users u ON u.username=s.id left JOIN department d ON s.department=d.no
+        SELECT s.id,s.`name`,d.`name` department,s.salary,s.perks,u.usertype type FROM staff s left JOIN users u ON u.username=s.id left JOIN department d ON s.department=d.no right JOIN company c ON u.company_id=c.id
+        where u.company_id=(select company_id from users where username=#{username})
     </select>
+    
+    <update id="quitMember">
+        update evaluate set old_evaluate=CONCAT(old_evaluate,"\r${msg}") where id=#{id};
+        update staff set department=null,perks=null,salary=null where id=#{id};
+        update users set company_id=null where username=#{id};
+    </update>
 </mapper>

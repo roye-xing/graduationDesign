@@ -29,7 +29,11 @@ public class LeaderService {
         leaderDao.updateTakeOff(check,uuid,msg);
         return true;
     }
-    public List<Staff> findAllMembers(){
-        return leaderDao.findAllMembers();
+    public List<Staff> findAllMembers(String username){
+        return leaderDao.findAllMembers(username);
+    }
+    public boolean quitMember(String id,String msg){
+        leaderDao.quitMember(id,msg);
+        return true;
     }
 }

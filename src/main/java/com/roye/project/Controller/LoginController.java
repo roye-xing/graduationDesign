@@ -30,7 +30,6 @@ public class LoginController {
                          String password,
                          String power,
                          HttpServletRequest request,
-                         RedirectAttributes attributes,
                          Model model,
                          HttpSession session){
         User user=userService.login(username,password,power);

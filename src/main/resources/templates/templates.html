@@ -12,7 +12,7 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="搜索" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" th:href="@{/user/logout}">登出</a>
+            <a class="nav-link" th:href="@{/user/logout}"><span data-feather="log-out"></span>登出</a>
         </li>
     </ul>
 </nav>
@@ -20,6 +20,12 @@
 <!--侧边栏-->
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="Sidebar">
     <div class="sidebar-sticky pt-3">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-muted">
+            <span>账号管理</span>
+        </h6>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>主要功能</span>
+        </h6>
         <ul class="nav flex-column">
             <li class="nav-item" th:each="menu:${menu}">
                 <a  th:class="(${active}==${menu.menuUrl})?'nav-link active':'nav-link'" th:href="${menu.menuUrl}" th:utext="${menu.icon}+${menu.menuName}">
@@ -27,6 +33,24 @@
                 </a>
             </li>
         </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>其他功能</span>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="credit-card"></span>
+                    赞助支付
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="${'https://github.com/roye-xing/graduationDesign'}">
+                    <span data-feather="github"></span>
+                    关于项目
+                </a>
+            </li>
+        </ul>
+
     </div>
 </nav>
 <!--警告框-->

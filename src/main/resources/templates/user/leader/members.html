@@ -64,14 +64,14 @@
             <tr th:each="info:${members}">
               <td th:text="${info.id}">员工编号</td>
               <td th:text="${info.name}">员工姓名</td>
-              <td th:text="${info.departmentName.name}">所属部门</td>
+              <td th:text="${info.departmentName}==null?'未指定':${info.departmentName.name}">所属部门</td>
               <td th:text="${info.salary}" style="display: none">基本工资</td>
               <td th:text="${info.perks}" style="display: none">岗位补贴</td>
               <td th:text="${info.type.power}">身份</td>
               <td>
                 <button class="btn btn-info" onclick="view_function(this)" id="view_btn" data-whatever="查看" data-toggle="modal" data-target="#exampleModal">查看</button>
                 <button class="btn btn-primary" onclick="edit_function(this)" id="edit_btn" data-whatever="修改" data-toggle="modal" data-target="#exampleModal">修改</button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">解除关系</button>
+                <button class="btn btn-danger" onclick="quit_function(this)" data-toggle="modal" data-target="#confirmModal">解除关系</button>
               </td>
             </tr>
           </tbody>
@@ -134,7 +134,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmModalLabel">雇主留言</h5>
+              <h5 class="modal-title" id="confirmModalLabel">雇主评价</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -144,7 +144,7 @@
                 <div class="form-group">
                   <label for="msg"><strong style="color: red">注意！！！</strong>请确认员工申请离职后再提交留言</label>
                   <input type="text" id="id" name="id" style="display: none">
-                  <textarea id="msg" name="msg" class="form-control"></textarea>
+                  <textarea id="msg" name="msg" class="form-control" required></textarea>
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-primary">确认</button>
@@ -215,6 +215,9 @@
         $("#exampleModal input").removeAttr("readonly")
         $("#exampleModal select").removeAttr("disabled")
         $("#exampleModal select").removeAttr("disabled")
+        dataReturn(obj)
+      }
+      function quit_function(obj){
         dataReturn(obj)
       }
   </script>

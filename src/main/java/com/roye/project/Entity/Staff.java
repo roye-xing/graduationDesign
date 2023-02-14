@@ -15,6 +15,15 @@ public class Staff {
 
     private Department departmentName;
     private User type;
+    private User companyId;
+
+    public User getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(User companyId) {
+        this.companyId = companyId;
+    }
 
     public User getType() {
         return type;

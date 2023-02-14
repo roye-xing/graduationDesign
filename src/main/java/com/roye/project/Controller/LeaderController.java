@@ -44,12 +44,16 @@ public class LeaderController {
         return "redirect:/leader/takeOff";
     }
     @RequestMapping("/leader/members")
-    public String members(Model model){
-        List<Staff> list=leaderService.findAllMembers();
+    public String members(Model model,HttpSession session){
+        List<Staff> list=leaderService.findAllMembers((String)session.getAttribute("loginUser"));
         model.addAttribute("menu",MenuConfig.LeaderMenu());
         model.addAttribute("members",list);
         model.addAttribute("departmentList",hrService.findAllDepartment());
         return "user/leader/members";
     }
     @RequestMapping("/leader/members/quit")
+    public String quit(String msg,String id){
+        leaderService.quitMember(id,msg);
+        return "redirect:/leader/members";
+    }
 }

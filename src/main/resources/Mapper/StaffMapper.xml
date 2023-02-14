@@ -11,6 +11,9 @@
         <association property="departmentName" javaType="department">
             <result column="department" property="name"></result>
         </association>
+        <association property="companyId" javaType="user">
+            <result column="company_id" property="companyId"></result>
+        </association>
     </resultMap>
     <resultMap id="staffEvaluate" type="evaluate">
         <id column="id" property="id"></id>
@@ -23,7 +26,7 @@
         <result column="old_score" property="oldScore"></result>
     </resultMap>
     <select id="findById" parameterType="string" resultMap="staffInDepartment">
-        select id,s.`name` name,sex,d.`name` department,birth,salary,perks from staff s,department d where s.id=#{id} AND s.department=d.`no`
+        select id,s.`name` name,sex,d.`name` department,birth,salary,perks,u.company_id from staff s LEFT JOIN department d ON s.department=d.`no` LEFT JOIN users u ON u.username=s.id where s.id=#{id}
     </select>
 
     <update id="update" parameterType="staff">
