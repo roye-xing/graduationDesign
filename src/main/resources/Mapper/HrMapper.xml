@@ -79,4 +79,24 @@
     <update id="updateTakeOff">
         update takeoff set hr_check=#{check} where uuid=#{uuid}
     </update>
+
+    <resultMap id="talentsInfo" type="staff">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <association property="user" javaType="user">
+            <result column="phone" property="phone"></result>
+            <result column="email" property="email"></result>
+            <result column="secrecy" property="secrecy"></result>
+        </association>
+        <association property="evaluate" javaType="evaluate">
+            <result column="old_works" property="oldWorks"></result>
+            <result column="old_evaluate" property="oldEvaluate"></result>
+            <result column="self_evaluate" property="selfEvaluate"></result>
+        </association>
+    </resultMap>
+    <select id="getAllTalents" resultMap="talentsInfo">
+        SELECT s.id,s.`name`,s.sex,IF(u.secrecy is true,CONCAT(LEFT(u.phone,3),'****',RIGHT(u.phone,4)),u.phone) AS 'phone',IF(u.secrecy is true,CONCAT(LEFT(u.email,3),'****',right(u.email,8)),u.email) AS 'email',u.secrecy,e.old_works,e.old_evaluate,e.self_evaluate
+        from staff s LEFT JOIN evaluate e ON e.id=s.id LEFT JOIN users u ON u.username=s.id WHERE u.company_id is null
+    </select>
 </mapper>

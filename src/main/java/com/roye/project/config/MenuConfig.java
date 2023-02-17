@@ -48,9 +48,15 @@ public class MenuConfig {
         menu3.setIcon("<span data-feather='layers'></span>");
         menu3.setMenuUrl("takeOff");
 
+        Menu menu4=new Menu();
+        menu4.setMenuName("人才查找");
+        menu4.setIcon("<span data-feather='star'></span>");
+        menu4.setMenuUrl("talents");
+
         list.add(menu1);
         list.add(menu2);
         list.add(menu3);
+        list.add(menu4);
         return list;
     }
     public static List<Menu> LeaderMenu(){

@@ -22,8 +22,8 @@ public class StaffService {
     public List<Staff> findById(String no){
         return staffDao.findById(no);
     }
-    public boolean update(String id, String name, String gender, Date birth){
-        staffDao.update(id,name,gender,birth);
+    public boolean update(String id, String name, String gender, Date birth,String email,String tel,boolean secrecy){
+        staffDao.update(id,name,gender,birth,email,tel,secrecy);
         return true;
     }
     //评价信息操作

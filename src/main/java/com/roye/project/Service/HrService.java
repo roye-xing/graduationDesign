@@ -42,4 +42,7 @@ public class HrService {
         hrDao.updateTakeOff(check,uuid);
         return true;
     }
+    public List<Staff> getAllTalents(){
+        return hrDao.getAllTalents();
+    }
 }

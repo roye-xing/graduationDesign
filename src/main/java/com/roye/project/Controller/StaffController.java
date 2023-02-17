@@ -40,6 +40,11 @@ public class StaffController {
 
         return "user/staff/main";
     }
+    @RequestMapping("/staff/setting")
+    public String setting(Model model){
+        model.addAttribute("menu",MenuConfig.StaffMenu());
+        return "main/setting";
+    }
     @RequestMapping("/staff/evaluate")
     public String evaluate(Model model,HttpSession session){
         String username=(String)session.getAttribute("loginUser");
@@ -99,10 +104,15 @@ public class StaffController {
         return "redirect:/staff/takeOff";
     }
     @RequestMapping("/staff/update")//clear
-    public String upDate(String id, String name, String gender, String birth, RedirectAttributes attributes){
+    public String upDate(String id,
+                         String name,
+                         String gender,
+                         boolean secrecy,
+                         String birth,String tel,String email, RedirectAttributes attributes){
         Date sqlDate=Date.valueOf(birth);
+        System.out.println(secrecy);
         if (name!=""){
-            if (staffService.update(id, name, gender, sqlDate)){
+            if (staffService.update(id, name, gender, sqlDate,email,tel,secrecy)){
                 //跳转页面携带参数要使用addFlashAttribute
             attributes.addFlashAttribute("state","editOK");
             }

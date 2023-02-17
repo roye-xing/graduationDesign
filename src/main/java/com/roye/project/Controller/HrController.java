@@ -81,4 +81,16 @@ public class HrController {
         }
         return "redirect:/hr/takeOff";
     }
+    @RequestMapping("/hr/talents")
+    public String talents(Model model){
+        List<Staff> list=hrService.getAllTalents();
+        model.addAttribute("talentsInfo",list);
+        model.addAttribute("menu",MenuConfig.HrMenu());
+        return "user/hr/talents";
+    }
+    @RequestMapping("/hr/talents/search")
+    public String talentSearch(){
+        return "redirect:/hr/talents";
+    }
+
 }

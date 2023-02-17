@@ -18,4 +18,5 @@ public interface HrDao {
     public boolean updateEvaluate(String hrEvaluate,int hrScore,String id);
     List<TakeOff> findAllTakeOff();
     boolean updateTakeOff(int check,String uuid);
+    List<Staff> getAllTalents();
 }

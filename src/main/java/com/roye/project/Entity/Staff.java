@@ -15,14 +15,23 @@ public class Staff {
 
     private Department departmentName;
     private User type;
-    private User companyId;
+    private User user;
+    private Evaluate evaluate;
 
-    public User getCompanyId() {
-        return companyId;
+    public Evaluate getEvaluate() {
+        return evaluate;
     }
 
-    public void setCompanyId(User companyId) {
-        this.companyId = companyId;
+    public void setEvaluate(Evaluate evaluate) {
+        this.evaluate = evaluate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public User getType() {

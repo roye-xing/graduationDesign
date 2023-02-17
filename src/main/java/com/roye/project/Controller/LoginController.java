@@ -78,4 +78,14 @@ public class LoginController {
         session.invalidate();
         return "main/index";
     }
+    @RequestMapping("*/setting/update")
+    public String update(HttpSession session,String nickname,String password,String newPwd,RedirectAttributes attributes){
+        String id=(String)session.getAttribute("loginUser");
+        if (userService.update(id,nickname,password,newPwd)){
+            attributes.addFlashAttribute("state","editOK");
+        }else {
+            attributes.addFlashAttribute("state","editError");
+        }
+        return "redirect:../setting";
+    }
 }

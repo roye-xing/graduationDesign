@@ -29,6 +29,11 @@ public class LeaderController {
         model.addAttribute("menu", MenuConfig.LeaderMenu());
         return "user/leader/main";
     }
+    @RequestMapping("/leader/setting")
+    public String setting(Model model){
+        model.addAttribute("menu",MenuConfig.LeaderMenu());
+        return "main/setting";
+    }
     @RequestMapping("/leader/takeOff")
     public String takeOff(Model model){
         List<TakeOff> list=leaderService.findAllTakeOff();

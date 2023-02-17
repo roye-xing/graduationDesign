@@ -16,4 +16,7 @@ public class UserService {
     public User login(String username,String password,String power){
         return userDao.login(username,password,power);
     }
+   public boolean update(String id,String nickname,String old_password,String new_password){
+        return userDao.update(id,nickname,old_password,new_password);
+   }
 }

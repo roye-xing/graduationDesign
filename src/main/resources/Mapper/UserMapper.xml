@@ -8,4 +8,21 @@
     <select id="login" resultType="User">
         select * from users where username=#{username} and password=#{password} and usertype=#{power}
     </select>
+    <update id="update">
+        update users
+        <set>
+            <if test="nickname!=null and nickname!=''">
+                nickname=#{nickname},
+            </if>
+            <if test="new_password!=null and new_password!=''">
+                password=#{new_password},
+            </if>
+        </set>
+        <where>
+            <if test="new_password!=null and new_password!=''">
+                password=#{old_password} and
+            </if>
+            username=#{id}
+        </where>
+    </update>
 </mapper>
