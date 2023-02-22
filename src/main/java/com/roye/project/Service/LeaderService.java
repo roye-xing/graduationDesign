@@ -3,6 +3,7 @@ package com.roye.project.Service;
 
 import com.roye.project.Dao.LeaderDao;
 import com.roye.project.Entity.Company;
+import com.roye.project.Entity.Request;
 import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,13 @@ public class LeaderService {
     }
     public boolean quitMember(String id,String msg){
         leaderDao.quitMember(id,msg);
+        return true;
+    }
+    public List<Request> getAllRequest(String id){
+        return leaderDao.getAllRequest(id);
+    }
+    public boolean updateRequest(String uuid,String userid,String id,int type){
+        leaderDao.updateRequest(uuid,userid,id,type);
         return true;
     }
 }

@@ -2,6 +2,8 @@ package com.roye.project.Controller;
 
 import com.roye.project.Entity.*;
 import com.roye.project.Service.HrService;
+import com.roye.project.Util.TimeUtil;
+import com.roye.project.Util.UUIDUtil;
 import com.roye.project.config.MenuConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,14 +11,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class HrController {
+    TimeUtil timeUtil;
+    UUIDUtil uuidUtil;
     @Autowired
     HrService hrService;
     @GetMapping  ("/hr/main")
@@ -48,11 +56,17 @@ public class HrController {
         }
         return "redirect:/hr/main";
     }
+    @RequestMapping("/hr/setting")
+    public String setting(Model model){
+        model.addAttribute("menu",MenuConfig.HrMenu());
+        return "main/setting";
+    }
     @RequestMapping("/hr/evaluate")
-    public String evaluate(String search,String type,Model model){
+    public String evaluate(String search,String type,Model model,HttpSession session){
+        String id=(String)session.getAttribute("loginUser");
         List<Menu> list2= MenuConfig.HrMenu();
         model.addAttribute("menu",list2);
-        List<Evaluate> list=hrService.findEvaluate(search,type);
+        List<Evaluate> list=hrService.findEvaluate(id,search,type);
         model.addAttribute("evaluateList",list);
         return "user/hr/evaluate";
     }
@@ -88,9 +102,24 @@ public class HrController {
         model.addAttribute("menu",MenuConfig.HrMenu());
         return "user/hr/talents";
     }
-    @RequestMapping("/hr/talents/search")
-    public String talentSearch(){
+    @GetMapping("/hr/talents/request")
+    public String talentsRequest(@RequestParam("id") String id, @RequestParam("type") String type, HttpSession session,RedirectAttributes attributes){
+        String requester=(String)session.getAttribute("loginUser");
+        Timestamp timestamp=timeUtil.localTime();
+        if (hrService.sendRequest(id,requester,type,timestamp,uuidUtil.getUUID())){
+            attributes.addFlashAttribute("state","requestOK");
+        }else {
+            attributes.addFlashAttribute("state","requestError");
+        }
         return "redirect:/hr/talents";
+    }
+    @RequestMapping("/hr/applicate")
+    public String applicate(Model model,HttpSession session){
+        String id=(String)session.getAttribute("loginUser");
+        List<Request> list=hrService.getAllRequest(id);
+        model.addAttribute("menu",MenuConfig.HrMenu());
+        model.addAttribute("requests",list);
+        return "user/hr/applicate";
     }
 
 }

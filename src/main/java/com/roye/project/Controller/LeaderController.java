@@ -1,6 +1,7 @@
 package com.roye.project.Controller;
 
 import com.roye.project.Entity.Company;
+import com.roye.project.Entity.Request;
 import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import com.roye.project.Service.HrService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -60,5 +63,24 @@ public class LeaderController {
     public String quit(String msg,String id){
         leaderService.quitMember(id,msg);
         return "redirect:/leader/members";
+    }
+    @RequestMapping("/leader/applicate")
+    public String applicate(Model model,HttpSession session){
+        String id=(String)session.getAttribute("loginUser");
+        List<Request> list=leaderService.getAllRequest(id);
+        model.addAttribute("requests",list);
+        model.addAttribute("menu",MenuConfig.LeaderMenu());
+        return "user/leader/applicate";
+    }
+    @RequestMapping("/leader/applicate/{type}")
+    public String editApplicate(@RequestParam String uuid,@PathVariable String type,@RequestParam String userid,HttpSession session, RedirectAttributes attributes){
+        String id=(String)session.getAttribute("loginUser");
+        if (type.equals("agree")){
+            leaderService.updateRequest(uuid,userid,id,1);
+            attributes.addFlashAttribute("state","editOK");
+        }else {
+            leaderService.updateRequest(uuid,userid,id,0);
+        }
+        return "redirect:/leader/applicate";
     }
 }

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>繁星人才管理-HR-申请处理</title>
+    <link href="/css/bootstrap-switch-button.css">
+    <!-- Bootstrap core CSS -->
+<link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+  </head>
+  <body>
+
+  <!--顶部导航栏模板复用-->
+  <div th:replace="~{templates::topbar}"></div>
+
+
+  <div class="container-fluid">
+  <div class="row">
+
+    <!--侧边导航栏模板复用-->
+    <div th:replace="~{templates::Sidebar(active='applicate')}"></div>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <!--警告框模板复用-->
+      <div th:replace="~{templates::alert}"></div>
+      <h2>申请处理</h2>
+      <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>用户编号</th>
+          <th>时间</th>
+          <th>类型</th>
+          <th>联系电话</th>
+          <th>电子邮箱</th>
+          <th>备注</th>
+          <th>用户意见</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="info:${requests}">
+          <td th:text="${infoStat.index}+1"></td>
+          <td th:text="${info.id}"></td>
+          <td th:text="${info.time}"></td>
+          <td th:text="${info.type}"></td>
+          <td th:text="${info.accept1}==0?'-':${info.phone}"></td>
+          <td th:text="${info.accept1}==0?'-':${info.email}"></td>
+          <td th:text="${info.msg}==null?'-':${info.msg}"></td>
+          <td th:text="${info.accept1}==null?'-':(${info.accept1}==0?'拒绝':'同意')"></td>
+          <td th:text="${info.uuid}" hidden="hidden"></td>
+          <td>
+            <a class="btn btn-danger" th:href="@{'/hr/applicate/delete?uuid='+${info.uuid}}">删除</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </main>
+  </div>
+</div>
+
+
+  <link th:href="@{/css/bootstrap-switch.min.css}" rel="stylesheet">
+
+  <script th:src="@{/js/jquery.slim.min.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/js/alert.js}"></script>
+        <script th:src="@{/js/feather.min.js}"></script>
+        <script th:src="@{/js/Chart.min.js}"></script>
+        <script th:src="@{/js/list.js}"></script>
+  </body>
+</html>

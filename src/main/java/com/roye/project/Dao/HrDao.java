@@ -1,12 +1,10 @@
 package com.roye.project.Dao;
 
-import com.roye.project.Entity.Department;
-import com.roye.project.Entity.Evaluate;
-import com.roye.project.Entity.Staff;
-import com.roye.project.Entity.TakeOff;
+import com.roye.project.Entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 @Mapper
 public interface HrDao {
@@ -14,9 +12,11 @@ public interface HrDao {
     boolean updateStaff(String id,String department,BigDecimal salary,BigDecimal perks);
     public List<Department> findAllDepartment();
     public List<Staff> findStaffByNo(String no);
-    public List<Evaluate> findEvaluate(String search,String type);
+    public List<Evaluate> findEvaluate(String id,String search,String type);
     public boolean updateEvaluate(String hrEvaluate,int hrScore,String id);
     List<TakeOff> findAllTakeOff();
     boolean updateTakeOff(int check,String uuid);
     List<Staff> getAllTalents();
+    boolean sendRequest(String id, String requester, String type, Timestamp sqlTime,String uuid);
+    List<Request> getAllRequest(String id);
 }

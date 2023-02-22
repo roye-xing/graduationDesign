@@ -17,4 +17,10 @@ public class TimeUtil {
         Timestamp sqlTime=new Timestamp(date.getTime());
         return sqlTime;
     }
+    //后端当前时间long类型转数据库timestamp
+    public static Timestamp localTime(){
+        long time=new Date().getTime();
+        Timestamp sqlTime=new Timestamp(time);
+        return sqlTime;
+    }
 }

@@ -17,9 +17,9 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/index",
-                        "/",
-                        "/user/login", "/user/register",
+                        "/","/admin","/admin/login","/admin/logout",
+                        "/user/login", "/user/register","/user/logout",
                         "/kaptcha",
-                        "/css/*","/js/*","/styles/*");
+                        "/css/*","/js/*","/styles/*","/img/*");
     }
 }

@@ -11,4 +11,9 @@ public class IndexController {
     public String index(){
         return "main/index";
     }
+    @RequestMapping ("/admin")
+    public String admin(){
+        return "user/admin/index";
+    }
+
 }

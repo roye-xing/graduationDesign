@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roye.project.Dao.AdminDao">
+    <resultMap id="getAllUsers" type="user">
+        <id column="username" property="username"></id>
+        <result column="password" property="password"></result>
+        <result column="usertype" property="power"></result>
+        <result column="nickname" property="nickname"></result>
+        <result column="company_id" property="companyId"></result>
+        <result column="email" property="email"></result>
+        <result column="phone" property="phone"></result>
+    </resultMap>
+    <select id="getAllUsers" resultMap="getAllUsers">
+        select * from users where usertype!='admin'
+    </select>
+    <insert id="addUser">
+        insert into users(username,password,usertype) values (#{username},#{password},#{type})
+    </insert>
+
+    <update id="updateUser">
+        update users
+        <set>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="type!=null and type!=''">
+                usertype=#{type},
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                nickname=#{nickname},
+            </if>
+            <if test="companyId!=null and companyId!=''">
+                company_id=#{companyId},
+            </if>
+        </set>
+        where username=#{username}
+    </update>
+
+    <delete id="delUser">
+        delete from users where username=#{username}
+    </delete>
+
+    <select id="getAllCompanies" resultType="company">
+        select * from company
+    </select>
+
+    <update id="updateCompany">
+        update company
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="tel!=null and tel!=''">tel=#{tel},</if>
+            <if test="address!=null and address!=''">address=#{address}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <insert id="addCompany">
+        insert into company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,name,
+            <if test="tel!=null and tel != ''">
+                tel,
+            </if>
+            <if test="address!=null and address!=''">
+                address,
+            </if>
+        </trim>
+        <trim prefix="value(" suffix=")" suffixOverrides=",">
+            #{id},#{name}
+            <if test="tel!=null and tel!=''">
+                #{tel},
+            </if>
+            <if test="address!=null and address!=''">
+                #{address},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delCompany">
+        delete from company where id=#{id}
+    </delete>
+</mapper>

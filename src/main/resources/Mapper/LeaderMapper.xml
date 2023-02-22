@@ -46,4 +46,13 @@
         update staff set department=null,perks=null,salary=null where id=#{id};
         update users set company_id=null where username=#{id};
     </update>
+
+    <select id="getAllRequest" resultType="request">
+        select c.id,c.time,s.`name` as requester,type,accept1,accept2,CONCAT('您司的HR想要录用这位人才') as msg,uuid FROM checkb c LEFT JOIN staff s ON s.id=c.id LEFT JOIN users u ON u.username=c.requester LEFT JOIN company co ON co.id=(select company_id FROM users where users.username=#{id}) where type='录用' and accept1=1 AND accept2=1 AND accept3 IS NULL
+    </select>
+
+    <update id="updateRequest">
+        update checkb set accept3=#{type} where uuid=#{uuid};
+        update users set company_id=(select company_id FROM (SELECT company_id FROM users where username=#{id}) as t1 where 1 ) where username=#{userid}
+    </update>
 </mapper>

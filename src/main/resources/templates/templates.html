@@ -11,7 +11,7 @@
     </button>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" th:href="@{/user/logout}"><span data-feather="log-out"></span>登出</a>
+            <a class="nav-link" th:href="@{./logout}"><span data-feather="log-out"></span>登出</a>
         </li>
     </ul>
 </nav>
@@ -29,6 +29,7 @@
                     账号设置
                 </a>
             </li>
+
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -65,10 +66,16 @@
 <nav id="adminMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="adminSidebar">
     <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
-            <li class="nav-item" th:each="menu:${menu}">
+            <li class="nav-item">
                 <a  th:class="${active}=='main'?'nav-link active':'nav-link'" th:href="main">
                     <span data-feather="home"></span>
                     账号管理
+                </a>
+            </li>
+            <li class="nav-item">
+                <a  th:class="${active}=='company'?'nav-link active':'nav-link'" th:href="company">
+                    <span data-feather="briefcase"></span>
+                    公司管理
                 </a>
             </li>
         </ul>
@@ -76,19 +83,35 @@
 </nav>
 
 <!--警告框-->
-<div th:fragment="alert">
-    <div class="alert alert-success fade show col-sm-9" role="alert" th:if="${state=='editOK'}">
+<div th:fragment="alert" th:switch="${state}">
+    <div class="alert alert-info fade show col-sm-9" role="alert" th:case="'regSuccess'" th:text="${remsg}">
+    </div>
+    <div class="alert alert-success fade show col-sm-9" role="alert" th:case="'editOK'">
         <strong>成功！！</strong>执行修改操作成功
     </div>
-    <div class="alert alert-danger fade show col-sm-9" role="alert" th:if="${state=='editError'}">
+    <div class="alert alert-danger fade show col-sm-9" role="alert" th:case="'editError'">
         <strong>错误！！</strong>执行修改操作失败
     </div>
-    <div class="alert alert-success fade show col-sm-9" role="alert" th:if="${state=='delOK'}">
+    <div class="alert alert-success fade show col-sm-9" role="alert" th:case="'insertOK'">
+        <strong>成功！！</strong>执行添加操作成功
+    </div>
+    <div class="alert alert-danger fade show col-sm-9" role="alert" th:case="'insertError'">
+        <strong>错误！！</strong>执行添加操作失败
+    </div>
+
+    <div class="alert alert-success fade show col-sm-9" role="alert" th:case="'delOK'">
         <strong>成功！！</strong>执行删除操作成功
     </div>
-    <div class="alert alert-danger fade show col-sm-9" role="alert" th:if="${state=='delError'}">
+    <div class="alert alert-danger fade show col-sm-9" role="alert" th:case="'delError'">
         <strong>错误！！</strong>执行删除操作失败
     </div>
+    <div class="alert alert-success fade show col-sm-9" role="alert" th:case="'requestOK'">
+        <strong>成功！！</strong>已发送申请
+    </div>
+    <div class="alert alert-danger fade show col-sm-9" role="alert" th:case="'requestError'">
+        <strong>错误！！</strong>发送申请时出现错误
+    </div>
+
 </div>
 
 

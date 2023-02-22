@@ -41,13 +41,14 @@
     </select>
 
     <select id="findEvaluate" resultMap="findEvaluate">
-        SELECT e.id,s.`name` name,e.hr_evaluate,e.hr_score FROM evaluate e RIGHT JOIN staff s ON e.id=s.id
+        SELECT e.id,s.`name` name,e.hr_evaluate,e.hr_score FROM evaluate e RIGHT JOIN staff s ON e.id=s.id LEFT JOIN users u ON s.id=u.username LEFT JOIN company c ON u.company_id=c.id
         <where>
+            c.id=(SELECT company_id FROM users where username=#{id})
             <if test="type == 'id' and search != ''">
-                e.id=#{search}
+               AND e.id=#{search}
             </if>
             <if test="type == 'name' and search!=''">
-                `name` like concat('%',+#{search},'%')
+              AND  `name` like concat('%',+#{search},'%')
             </if>
         </where>
     </select>
@@ -98,5 +99,26 @@
     <select id="getAllTalents" resultMap="talentsInfo">
         SELECT s.id,s.`name`,s.sex,IF(u.secrecy is true,CONCAT(LEFT(u.phone,3),'****',RIGHT(u.phone,4)),u.phone) AS 'phone',IF(u.secrecy is true,CONCAT(LEFT(u.email,3),'****',right(u.email,8)),u.email) AS 'email',u.secrecy,e.old_works,e.old_evaluate,e.self_evaluate
         from staff s LEFT JOIN evaluate e ON e.id=s.id LEFT JOIN users u ON u.username=s.id WHERE u.company_id is null
+    </select>
+
+    <insert id="sendRequest">
+        insert into checkb
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,requester,`type`,`time`,uuid,
+            <if test="type=='录用'">
+                accept2
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id},#{requester},#{type},#{sqlTime},#{uuid},
+            <if test="type=='录用'">
+                1
+            </if>
+        </trim>
+
+    </insert>
+
+    <select id="getAllRequest" resultType="request">
+        select id,`time`,`type`,IF(type='联系方式',(select phone from users where username=checkb.id),'-') as phone,IF(type='联系方式',(select email from users where username=checkb.id),'-') as email,accept1,if(type='录用','申请录用','获取联系方式') as msg from checkb where requester=#{id}
     </select>
 </mapper>

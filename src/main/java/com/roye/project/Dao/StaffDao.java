@@ -1,6 +1,7 @@
 package com.roye.project.Dao;
 
 import com.roye.project.Entity.Evaluate;
+import com.roye.project.Entity.Request;
 import com.roye.project.Entity.Staff;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +19,7 @@ public interface StaffDao {
     List<Evaluate> findEvaluate(String id);
     //更新评价信息
     boolean updateEvaluate(String id,String oldWork,String selfMsg,int selfScore);
+    List<Request> getAllRequest(String id);
+    boolean editRequest(String uuid,int state);
+    boolean delRequest(String uuid);
 }

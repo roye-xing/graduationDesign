@@ -1,9 +1,6 @@
 package com.roye.project.Controller;
 
-import com.roye.project.Entity.Evaluate;
-import com.roye.project.Entity.Menu;
-import com.roye.project.Entity.Staff;
-import com.roye.project.Entity.TakeOff;
+import com.roye.project.Entity.*;
 import com.roye.project.Service.StaffService;
 import com.roye.project.Util.TimeUtil;
 import com.roye.project.Util.UUIDUtil;
@@ -14,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -40,10 +38,38 @@ public class StaffController {
 
         return "user/staff/main";
     }
+    @RequestMapping("/staff/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "main/index";
+    }
     @RequestMapping("/staff/setting")
     public String setting(Model model){
         model.addAttribute("menu",MenuConfig.StaffMenu());
         return "main/setting";
+    }
+    @RequestMapping("/staff/applicate")
+    public String applicate(Model model,HttpSession session){
+        String id=(String)session.getAttribute("loginUser");
+        List<Request> requests=staffService.getAllRequest(id);
+        model.addAttribute("menu",MenuConfig.StaffMenu());
+        model.addAttribute("requests",requests);
+        return "user/staff/applicate";
+    }
+    @RequestMapping("/staff/applicate/{type}")
+    public String editApplicate(RedirectAttributes attributes, @PathVariable String type, @RequestParam String uuid){
+        if (type.equals("agree")){
+            staffService.editRequest(uuid,1);
+        }if (type.equals("disagree")) {
+            staffService.editRequest(uuid,0);
+        }if (type.equals("delete")){
+            if (staffService.delRequest(uuid)){
+                attributes.addFlashAttribute("state","delOK");
+            }else {
+                attributes.addFlashAttribute("state","delError");
+            }
+        }
+        return "redirect:/staff/applicate";
     }
     @RequestMapping("/staff/evaluate")
     public String evaluate(Model model,HttpSession session){
@@ -94,7 +120,7 @@ public class StaffController {
         staffService.addTakeOff(id,type,sql_regtime,sql_backtime,reason,uuid);
         return "redirect:/staff/takeOff";
     }
-    @RequestMapping(value="/staff/takeOff/delete/{uuid}")//clear
+    @RequestMapping(value="/staff/takeOff/delete")//clear
     public String delTakeOff(@PathVariable String uuid,RedirectAttributes attributes){
         if (staffService.delTakeOff(uuid)){
             attributes.addFlashAttribute("state","delOK");

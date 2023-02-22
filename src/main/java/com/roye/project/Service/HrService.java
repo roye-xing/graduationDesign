@@ -1,14 +1,12 @@
 package com.roye.project.Service;
 
 import com.roye.project.Dao.HrDao;
-import com.roye.project.Entity.Department;
-import com.roye.project.Entity.Evaluate;
-import com.roye.project.Entity.Staff;
-import com.roye.project.Entity.TakeOff;
+import com.roye.project.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -28,8 +26,8 @@ public class HrService {
     public List<Staff> findStaffByNo(String no){
         return hrDao.findStaffByNo(no);
     }
-    public List<Evaluate> findEvaluate(String search,String type){
-        return hrDao.findEvaluate(search,type);
+    public List<Evaluate> findEvaluate(String id,String search,String type){
+        return hrDao.findEvaluate(id,search,type);
     }
     public boolean updateEvaluate(String id,String hrEvaluate,int hrScore){
         hrDao.updateEvaluate(hrEvaluate,hrScore,id);
@@ -44,5 +42,12 @@ public class HrService {
     }
     public List<Staff> getAllTalents(){
         return hrDao.getAllTalents();
+    }
+    public boolean sendRequest(String id, String requester, String type, Timestamp sqlTime,String uuid){
+        hrDao.sendRequest(id,requester,type,sqlTime,uuid);
+        return true;
+    }
+    public List<Request> getAllRequest(String id){
+        return hrDao.getAllRequest(id);
     }
 }

@@ -43,4 +43,16 @@
     <update id="updateEvaluate" parameterType="evaluate">
         update evaluate set old_works=#{oldWork},self_evaluate=#{selfMsg},self_score=#{selfScore} where id=#{id}
     </update>
+
+    <select id="getAllRequest" resultType="request" parameterType="string">
+        select id,`time`,`type`,accept1,accept2,accept3,IF(type="录用",CONCAT((select name from company RIGHT JOIN users on users.company_id=company.id where users.username=checkb.requester),'的HR想录用你'),CONCAT((select name from company RIGHT JOIN users on users.company_id=company.id where users.username=checkb.requester),'的HR想获取你的联系方式')) AS msg,uuid from checkb where id=#{id};
+    </select>
+
+    <update id="editRequest">
+        update checkb set accept1=#{state} where uuid=#{uuid}
+    </update>
+
+    <delete id="delRequest">
+        delete from checkb where uuid=#{uuid}
+    </delete>
 </mapper>

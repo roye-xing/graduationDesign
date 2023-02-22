@@ -1,6 +1,7 @@
 package com.roye.project.Dao;
 
 import com.roye.project.Entity.Company;
+import com.roye.project.Entity.Request;
 import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,6 @@ public interface LeaderDao {
     boolean updateTakeOff(int check,String uuid,String msg);
     List<Staff> findAllMembers(String username);
     boolean quitMember(String id,String msg);
+    List<Request> getAllRequest(String id);
+    boolean updateRequest(String uuid,String userid,String id,int type);
 }

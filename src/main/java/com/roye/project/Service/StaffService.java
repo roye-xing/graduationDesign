@@ -3,6 +3,7 @@ package com.roye.project.Service;
 import com.roye.project.Dao.StaffDao;
 import com.roye.project.Dao.TakeOffDao;
 import com.roye.project.Entity.Evaluate;
+import com.roye.project.Entity.Request;
 import com.roye.project.Entity.Staff;
 import com.roye.project.Entity.TakeOff;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,17 @@ public class StaffService {
         return true;
     }
     public List<TakeOff> checkTakeOff(String no){return takeOffDao.check(no);}
+
+    public List<Request> getAllRequest(String id){
+        return staffDao.getAllRequest(id);
+    }
+
+    public boolean editRequest(String uuid,int state){
+        staffDao.editRequest(uuid,state);
+        return true;
+    }
+    public boolean delRequest(String uuid){
+        staffDao.delRequest(uuid);
+        return true;
+    }
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.roye.project.Dao.UserDao">
-    <insert id="add" parameterType="User">
-        insert into users(username,password,usertype) values(#{username},#{password},'staff')
+    <insert id="add">
+        insert into users(username,password,usertype,email,phone) values(#{username},#{password},'staff',#{email},#{phone});
+        insert into staff(id) values (#{username});
+        insert into evaluate(id) values (#{username})
     </insert>
 
     <select id="login" resultType="User">
@@ -25,4 +27,8 @@
             username=#{id}
         </where>
     </update>
+
+    <select id="adminLogin" resultType="user">
+        select * from users where username=#{username} and password=#{password} and usertype='admin'
+    </select>
 </mapper>

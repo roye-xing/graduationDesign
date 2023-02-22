@@ -7,9 +7,6 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
     <title>繁星人才管理-员工-评价信息</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
-
     
 
     <!-- Bootstrap core CSS -->
@@ -62,21 +59,21 @@
       <form th:each="info:${evaluates}" th:action="@{/staff/evaluate/update}">
         <div class="form-group">
           <label for="works" class="col-form-label">就职经历</label>
-          <textarea id="works" class="form-control" th:text="${info.oldWorks}" name="oldWork"></textarea>
+          <textarea id="works" class="form-control" th:text="${info.oldWorks}==null?'-':${info.oldWorks}" name="oldWork"></textarea>
         </div>
         <div class="form-group">
           <label for="old_evaluate" class="col-form-label">过往雇主评价</label>
-          <textarea id="old_evaluate" readonly class="form-control-plaintext" th:text="${info.oldEvaluate}"></textarea>
+          <textarea id="old_evaluate" readonly class="form-control-plaintext" th:text="${info.oldEvaluate}==null?'-':${info.oldEvaluate}"></textarea>
         </div>
         <div class="form-group">
           <label for="hr_evaluate" class="col-form-label">HR评价</label>
-          <textarea id="hr_evaluate" readonly class="form-control-plaintext" th:text="${info.hrEvaluate}"></textarea>
+          <textarea id="hr_evaluate" readonly class="form-control-plaintext" th:text="${info.hrEvaluate}==null?'-':${info.hrEvaluate}"></textarea>
         </div>
 
         <div class="form-group">
           <div class="form-group">
             <label for="selfScore" class="col-form-label">自我评分</label>
-            <input type="number" class="form-control" max="100" min="10" name="selfScore" id="selfScore" th:value="${info.selfScore}">
+            <input type="number" required class="form-control" max="100" min="10" name="selfScore" id="selfScore" th:value="${info.selfScore}">
           </div>
           <label for="self_evaluate" class="col-form-label">自我评价</label>
           <textarea id="self_evaluate" class="form-control" name="selfText" th:text="${info.selfEvaluate}"></textarea>

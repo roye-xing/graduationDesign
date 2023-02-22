@@ -24,9 +24,16 @@ public class MenuConfig {
         menu3.setIcon("<span data-feather='file'></span>");
         menu3.setMenuUrl("takeOff");
 
+        Menu menu4=new Menu();
+        menu4.setMenuName("申请处理");
+        menu4.setIcon("<span data-feather='message-square'></span>");
+        menu4.setMenuUrl("applicate");
+
+
         list.add(menu1);
         list.add(menu2);
         list.add(menu3);
+        list.add(menu4);
 
         return list;
     }
@@ -53,10 +60,17 @@ public class MenuConfig {
         menu4.setIcon("<span data-feather='star'></span>");
         menu4.setMenuUrl("talents");
 
+        Menu menu5=new Menu();
+        menu5.setMenuName("申请处理");
+        menu5.setIcon("<span data-feather='message-square'></span>");
+        menu5.setMenuUrl("applicate");
+
+
         list.add(menu1);
         list.add(menu2);
         list.add(menu3);
         list.add(menu4);
+        list.add(menu5);
         return list;
     }
     public static List<Menu> LeaderMenu(){
@@ -77,10 +91,15 @@ public class MenuConfig {
         menu3.setIcon("<span data-feather='layers'></span>");
         menu3.setMenuUrl("takeOff");
 
+        Menu menu4=new Menu();
+        menu4.setMenuName("申请处理");
+        menu4.setIcon("<span data-feather='message-square'></span>");
+        menu4.setMenuUrl("applicate");
+
         list.add(menu1);
         list.add(menu2);
         list.add(menu3);
-
+        list.add(menu4);
         return list;
     }
 }
