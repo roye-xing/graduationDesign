@@ -47,7 +47,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="./pay">
+                <a th:class="${active}=='pay'?'nav-link active':'nav-link'" href="./pay">
                     <span data-feather="credit-card"></span>
                     赞助支付
                 </a>

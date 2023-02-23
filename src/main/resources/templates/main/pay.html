@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>繁星人才管理-支付赞助</title>
     <!-- Bootstrap core CSS -->
     <link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet">
@@ -43,80 +44,81 @@
             <!--警告框模板复用-->
             <div th:replace="~{templates::alert}"></div>
 
-            <h2>账号设置</h2>
-            <form th:action="@{./setting/update}" method="post">
-                <div class="form-group row">
-                    <label for="nickname" class="col-sm-2 col-form-label">昵称</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="nickname" name="nickname">
-                    </div>
+            <h2>支付赞助</h2>
+            <div class="row">
+                <div class="rounded mx-auto d-block">
+                    <img th:src="@{/img/wxpaylogo_xxxhdpi.png}" class="img-fluid " style="width: 200px!important;height: 100px!important;">
+                    <input type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" id="wxMoney" class="form-control" placeholder="请输入金额">
+                    <button class="btn btn-success rounded mx-auto d-block mt-2" id="wxpay">打赏</button>
                 </div>
-                <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">旧密码</label>
-                    <div class="col-sm-5">
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
+                <div class="rounded mx-auto d-block">
+                    <img th:src="@{/img/alipay.png}" class="img-fluid" style="width: 200px!important;">
+                    <input type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" id="aliMoney" class="form-control" placeholder="请输入金额">
+                    <button class="btn btn-success rounded mx-auto d-block mt-2" id="alipay">打赏</button>
                 </div>
-                <div class="form-group row">
-                    <label for="newPwd" class="col-sm-2 col-form-label">新密码</label>
-                    <div class="col-sm-5">
-                        <input type="password" class="form-control" id="newPwd" name="newPwd" minlength="3">
-                        <div id="strength"></div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <button type="submit" class="btn btn-info">保存修改</button>
-                </div>
-            </form>
-
+            </div>
         </main>
     </div>
 </div>
+<form style='display:none;' id='formpay' name='formpay' method='post' action='https://gateway.xddpay.com'>
+    <input name='order_no' id='order_no' type='text' value=''/>
+    <input name='subject' id='subject' type='text' value='' />
+    <input name='pay_type' id='pay_type' type='text' value='' />
+    <input name='money' id='money' type='text' value=''/>
+    <input name='app_id' id='app_id' type='text' value=''/>
+    <input name='extra' id='extra' type='text' value=''/>
+    <input name='sign' id='sign' type='text' value=''/>
+    <input type='submit' id='submitdemo1'>
+</form>
 
 
-
-<script th:src="@{/js/jquery.slim.min.js}"></script>
+<script th:src="@{/js/jquery-3.4.1.js}"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/alert.js}"></script>
 <script th:src="@{/js/feather.min.js}"></script>
 <script th:src="@{/js/list.js}"></script>
 <script type="text/javascript">
-    //密码强度检测
-    function pwdStrength(pwdID,strengthID) {
-        this.init(strengthID);
-        var _this = this;
-        document.getElementById(pwdID).onkeyup = function () {
-            _this.checkStrength(this.value,strengthID);
-        }
-    };
-        //初始化强度显示元素
-        pwdStrength.prototype.init=function(strengthID){
-            var confirm=document.getElementById(strengthID);
-            var span=document.createElement("span");
-            this.Strength=confirm.appendChild(span);
-        };
-        //检测密码强度
-        pwdStrength.prototype.checkStrength=function (val){
-            var LvTxt=["","弱","中","强"];
-            let Lv=0;
-            var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g")  //强
-            var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g")  //中
-            var enoughRegex = new RegExp("(?=.{6,}).*", "g") //弱
-            if (enoughRegex.test(val)){Lv++};
-            if (mediumRegex.test(val)){Lv++};
-            if (strongRegex.test(val)){Lv++};
-            if (Lv>3){Lv=3}
-            switch (Lv) {
-                case 1: this.Strength.className="badge badge-danger col-sm-3"
-                        break;
-                case 2: this.Strength.className="badge badge-info col-sm-5"
-                        break;
-                case 3: this.Strength.className="badge badge-success col-sm-10"
-                        break;
-            }
-            this.Strength.innerText=LvTxt[Lv];
-        };
-    new pwdStrength("newPwd","strength")
+    $().ready(function (){
+        $('#wxpay').click(function (){
+            $.get(
+                "/roye/pay/pay",
+                {
+                    money:$('#wxMoney').val(),
+                    pay_type:"44",
+                },
+                function (data){
+                    $("#order_no").val(data.data.order_no);
+                    $('#subject').val(data.data.subject);
+                    $("#pay_type").val(data.data.pay_type);
+                    $('#money').val(data.data.money);
+                    $("#app_id").val(data.data.app_id);
+                    $('#extra').val(data.data.extra);
+                    $("#sign").val(data.data.sign);
+                    $('#submitdemo1').click();
+                },"json"
+            )
+        })
+        $('#alipay').click(function (){
+            $.get(
+                "/roye/pay/pay",
+                {
+                    money:$('#aliMoney').val(),
+                    pay_type:"43",
+                },
+                function (data){
+                    $("#order_no").val(data.data.order_no);
+                    $('#subject').val(data.data.subject);
+                    $("#pay_type").val(data.data.pay_type);
+                    $('#money').val(data.data.money);
+                    $("#app_id").val(data.data.app_id);
+                    $('#extra').val(data.data.extra);
+                    $("#sign").val(data.data.sign);
+                    $('#submitdemo1').click();
+                },"json"
+            )
+        })
+
+    })
 </script>
 </body>
 </html>

@@ -24,12 +24,26 @@ public class LeaderController {
     LeaderService leaderService;
     @Autowired
     HrService hrService;
+    public boolean checkIdentify(HttpSession session){
+        if (session.getAttribute("userType").equals("admin")){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     @RequestMapping("/leader/main")
-    public String main(Model model, HttpSession session){
-        String username=(String)session.getAttribute("loginUser");
-        List<Company> info= leaderService.findCompanyInfo(username);
-        model.addAttribute("company",info);
-        model.addAttribute("menu", MenuConfig.LeaderMenu());
+    public String main(Model model, HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            String username=(String)session.getAttribute("loginUser");
+            List<Company> info= leaderService.findCompanyInfo(username);
+            model.addAttribute("company",info);
+            model.addAttribute("menu", MenuConfig.LeaderMenu());
+
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
         return "user/leader/main";
     }
     @RequestMapping("/leader/setting")
@@ -38,11 +52,18 @@ public class LeaderController {
         return "main/setting";
     }
     @RequestMapping("/leader/takeOff")
-    public String takeOff(Model model){
-        List<TakeOff> list=leaderService.findAllTakeOff();
-        model.addAttribute("takeoff",list);
+    public String takeOff(Model model,RedirectAttributes attributes,HttpSession session){
+        if(checkIdentify(session)){
+            List<TakeOff> list=leaderService.findAllTakeOff();
+            model.addAttribute("takeoff",list);
 
-        model.addAttribute("menu",MenuConfig.LeaderMenu());
+            model.addAttribute("menu",MenuConfig.LeaderMenu());
+
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
+
 
         return "user/leader/takeOff";
     }
@@ -52,11 +73,17 @@ public class LeaderController {
         return "redirect:/leader/takeOff";
     }
     @RequestMapping("/leader/members")
-    public String members(Model model,HttpSession session){
-        List<Staff> list=leaderService.findAllMembers((String)session.getAttribute("loginUser"));
-        model.addAttribute("menu",MenuConfig.LeaderMenu());
-        model.addAttribute("members",list);
-        model.addAttribute("departmentList",hrService.findAllDepartment());
+    public String members(Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            List<Staff> list=leaderService.findAllMembers((String)session.getAttribute("loginUser"));
+            model.addAttribute("menu",MenuConfig.LeaderMenu());
+            model.addAttribute("members",list);
+            model.addAttribute("departmentList",hrService.findAllDepartment());
+
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
         return "user/leader/members";
     }
     @RequestMapping("/leader/members/quit")
@@ -65,11 +92,17 @@ public class LeaderController {
         return "redirect:/leader/members";
     }
     @RequestMapping("/leader/applicate")
-    public String applicate(Model model,HttpSession session){
-        String id=(String)session.getAttribute("loginUser");
-        List<Request> list=leaderService.getAllRequest(id);
-        model.addAttribute("requests",list);
-        model.addAttribute("menu",MenuConfig.LeaderMenu());
+    public String applicate(Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            String id=(String)session.getAttribute("loginUser");
+            List<Request> list=leaderService.getAllRequest(id);
+            model.addAttribute("requests",list);
+            model.addAttribute("menu",MenuConfig.LeaderMenu());
+
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
         return "user/leader/applicate";
     }
     @RequestMapping("/leader/applicate/{type}")
@@ -83,4 +116,10 @@ public class LeaderController {
         }
         return "redirect:/leader/applicate";
     }
+    @RequestMapping("/leader/pay")
+    public String pay(Model model){
+        model.addAttribute("menu",MenuConfig.LeaderMenu());
+        return "main/pay";
+    }
+
 }

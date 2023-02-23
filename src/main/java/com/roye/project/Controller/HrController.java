@@ -27,24 +27,35 @@ public class HrController {
     UUIDUtil uuidUtil;
     @Autowired
     HrService hrService;
-    @GetMapping  ("/hr/main")
-    public String main(Model model,String department){
-        if (department==null){
-            List<Staff> list=hrService.findAllStaff();
-            model.addAttribute("staffList",list);
+    public boolean checkIdentify(HttpSession session){
+        if (session.getAttribute("userType").equals("hr")){
+            return true;
         }else {
-            List<Staff> list=hrService.findStaffByNo(department);
-            model.addAttribute("staffList",list);
+            return false;
         }
+    }
 
-        List<Department> list1=hrService.findAllDepartment();
-        List<Menu> list2= MenuConfig.HrMenu();
+    @GetMapping  ("/hr/main")
+    public String main(Model model,String department,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            if (department==null){
+                List<Staff> list=hrService.findAllStaff();
+                model.addAttribute("staffList",list);
+            }else {
+                List<Staff> list=hrService.findStaffByNo(department);
+                model.addAttribute("staffList",list);
+            }
 
-        model.addAttribute("selected",department);
-        model.addAttribute("menu",list2);
-        model.addAttribute("departmentList",list1);
+            List<Department> list1=hrService.findAllDepartment();
+            List<Menu> list2= MenuConfig.HrMenu();
+            model.addAttribute("selected",department);
+            model.addAttribute("menu",list2);
+            model.addAttribute("departmentList",list1);
 
-
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
         return "user/hr/main";
     }
     @RequestMapping("/hr/main/update")
@@ -62,12 +73,19 @@ public class HrController {
         return "main/setting";
     }
     @RequestMapping("/hr/evaluate")
-    public String evaluate(String search,String type,Model model,HttpSession session){
-        String id=(String)session.getAttribute("loginUser");
-        List<Menu> list2= MenuConfig.HrMenu();
-        model.addAttribute("menu",list2);
-        List<Evaluate> list=hrService.findEvaluate(id,search,type);
-        model.addAttribute("evaluateList",list);
+    public String evaluate(String search,String type,Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            String id=(String)session.getAttribute("loginUser");
+            List<Menu> list2= MenuConfig.HrMenu();
+            model.addAttribute("menu",list2);
+            List<Evaluate> list=hrService.findEvaluate(id,search,type);
+            model.addAttribute("evaluateList",list);
+
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
+
         return "user/hr/evaluate";
     }
     @RequestMapping("/hr/evaluate/update")
@@ -80,10 +98,16 @@ public class HrController {
         return "redirect:/hr/evaluate";
     }
     @RequestMapping("/hr/takeOff")
-    public String takeOff(Model model){
-        List<TakeOff> list=hrService.findAllTakeOff();
-        model.addAttribute("menu",MenuConfig.HrMenu());
-        model.addAttribute("takeoff",list);
+    public String takeOff(Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            List<TakeOff> list=hrService.findAllTakeOff();
+            model.addAttribute("menu",MenuConfig.HrMenu());
+            model.addAttribute("takeoff",list);
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
+
         return "user/hr/takeOff";
     }
     @RequestMapping(value="/hr/takeOff/{type}/{uuid}")
@@ -96,10 +120,16 @@ public class HrController {
         return "redirect:/hr/takeOff";
     }
     @RequestMapping("/hr/talents")
-    public String talents(Model model){
-        List<Staff> list=hrService.getAllTalents();
-        model.addAttribute("talentsInfo",list);
-        model.addAttribute("menu",MenuConfig.HrMenu());
+    public String talents(Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            List<Staff> list=hrService.getAllTalents();
+            model.addAttribute("talentsInfo",list);
+            model.addAttribute("menu",MenuConfig.HrMenu());
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
+
         return "user/hr/talents";
     }
     @GetMapping("/hr/talents/request")
@@ -114,12 +144,24 @@ public class HrController {
         return "redirect:/hr/talents";
     }
     @RequestMapping("/hr/applicate")
-    public String applicate(Model model,HttpSession session){
-        String id=(String)session.getAttribute("loginUser");
-        List<Request> list=hrService.getAllRequest(id);
-        model.addAttribute("menu",MenuConfig.HrMenu());
-        model.addAttribute("requests",list);
+    public String applicate(Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            String id=(String)session.getAttribute("loginUser");
+            List<Request> list=hrService.getAllRequest(id);
+            model.addAttribute("menu",MenuConfig.HrMenu());
+            model.addAttribute("requests",list);
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
+
         return "user/hr/applicate";
     }
+    @RequestMapping("/hr/pay")
+    public String pay(Model model){
+        model.addAttribute("menu",MenuConfig.HrMenu());
+        return "main/pay";
+    }
+
 
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -148,5 +150,10 @@ public class StaffController {
         }
 
         return "redirect:/staff/main";
+    }
+    @RequestMapping("/staff/pay")
+    public String pay(Model model){
+        model.addAttribute("menu",MenuConfig.StaffMenu());
+        return "main/pay";
     }
 }

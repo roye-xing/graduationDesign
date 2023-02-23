@@ -25,8 +25,8 @@ public class AdminController {
     UserService userService;
     @Autowired
     AdminService adminService;
-    public boolean checkIdentify(String type){
-        if (type.equals("admin")){
+    public boolean checkIdentify(HttpSession session){
+        if (session.getAttribute("userType").equals("admin")){
             return true;
         }else {
             return false;
@@ -50,8 +50,7 @@ public class AdminController {
     }
     @RequestMapping("/admin/main")
     public String main(Model model,RedirectAttributes attributes,HttpSession session){
-        String type=(String)session.getAttribute("userType");
-        if(checkIdentify(type)){
+        if(checkIdentify(session)){
             List<User> list=adminService.getAllUser();
             model.addAttribute("users",list);
         }else {
@@ -89,8 +88,13 @@ public class AdminController {
         return "redirect:/admin/main";
     }
     @RequestMapping("/admin/company")
-    public String company(Model model){
-        model.addAttribute("companies",adminService.getAllCompanies());
+    public String company(Model model,HttpSession session,RedirectAttributes attributes){
+        if(checkIdentify(session)){
+            model.addAttribute("companies",adminService.getAllCompanies());
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
         return "user/admin/company";
     }
     @RequestMapping("/admin/company/{type}")
