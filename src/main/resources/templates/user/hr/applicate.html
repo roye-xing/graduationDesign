@@ -69,10 +69,10 @@
           <td th:text="${info.id}"></td>
           <td th:text="${info.time}"></td>
           <td th:text="${info.type}"></td>
-          <td th:text="${info.accept1}==0?'-':${info.phone}"></td>
-          <td th:text="${info.accept1}==0?'-':${info.email}"></td>
+          <td th:text="${info.accept1}!=1?'-':${info.phone}"></td>
+          <td th:text="${info.accept1}!=1?'-':${info.email}"></td>
           <td th:text="${info.msg}==null?'-':${info.msg}"></td>
-          <td th:text="${info.accept1}==null?'-':(${info.accept1}==0?'拒绝':'同意')"></td>
+          <td th:text="${info.accept1}==null?'处理中':(${info.accept1}==0?'拒绝':'同意')"></td>
           <td th:text="${info.uuid}" hidden="hidden"></td>
           <td>
             <a class="btn btn-danger" th:href="@{'/hr/applicate/delete?uuid='+${info.uuid}}">删除</a>

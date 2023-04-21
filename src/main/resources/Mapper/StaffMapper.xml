@@ -33,7 +33,22 @@
     </select>
 
     <update id="update" parameterType="staff">
-        update staff,users set name=#{name},sex=#{gender},birth=#{birth},email=#{email},phone=#{tel},secrecy=#{secrecy} where id=#{id} AND username=#{id}
+        update staff,users
+        <set>
+            name=#{name},sex=#{gender},secrecy=#{secrecy},
+            <if test="birth!=null">
+                birth=#{birth},
+            </if>
+            <if test="email!=null and email!=''">
+                email=#{email},
+            </if>
+            <if test="tel!=null and tel!=''">
+                phone=#{tel},
+            </if>
+        </set>
+        <where>
+            id=#{id} AND username=#{id}
+        </where>
     </update>
 
     <select id="findEvaluate" parameterType="string" resultMap="staffEvaluate">

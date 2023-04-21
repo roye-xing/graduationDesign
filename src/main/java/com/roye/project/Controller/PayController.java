@@ -33,7 +33,7 @@ public class PayController {
 		remoteMap.put("order_no", PayUtil.getOrderIdByUUId());
 		remoteMap.put("subject", "网页赞助");
 		remoteMap.put("app_id", PayUtil.APP_ID);
-		remoteMap.put("extra", session.getAttribute("userType").toString()+session.getAttribute("username").toString());
+		remoteMap.put("extra", "");
 		resultMap.put("data", PayUtil.payOrder(remoteMap));
 		return resultMap;
 	}

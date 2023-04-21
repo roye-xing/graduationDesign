@@ -27,6 +27,7 @@ public class LoginController {
     @Autowired
     StaffService staffService;
 
+    //登录
     @RequestMapping("/user/login")
     public Object select(String username,
                          String password,
@@ -63,21 +64,20 @@ public class LoginController {
         }
 
     }
+    //注册
     @RequestMapping("/user/register")
-    public String add(User user,String username,String password,HttpServletRequest request,Model model){
+    public String add(User user,String username,String password,String phone,String email,HttpServletRequest request,Model model){
         if (username!="" && password!=""){
             if (CodeUtil.checkVerifyCode(request)){
-                userService.add(username, md5Util.string2MD5(md5Util.convertMD5(password)));
-                model.addAttribute("remsg","注册成功，您可以登陆了");
-                return "main/index";
+                userService.add(username, md5Util.string2MD5(md5Util.convertMD5(password)),phone,email);
+                model.addAttribute("msg","注册成功，您可以登陆了");
             }else {
                 model.addAttribute("remsg","验证码错误");
-                return "main/index";
             }
         }else {
             model.addAttribute("remsg","用户名或密码不能为空");
-            return "main/index";
         }
+        return "main/index";
     }
     @RequestMapping("/user/logout")
     public String logout(HttpSession session){
@@ -87,7 +87,7 @@ public class LoginController {
     @RequestMapping("*/setting/update")
     public String update(HttpSession session,String nickname,String password,String newPwd,RedirectAttributes attributes){
         String id=(String)session.getAttribute("loginUser");
-        if (userService.update(id,nickname,md5Util.string2MD5(md5Util.convertMD5(password)),newPwd)){
+        if (userService.update(id,nickname,md5Util.string2MD5(md5Util.convertMD5(password)),md5Util.string2MD5(md5Util.convertMD5(newPwd)))){
             attributes.addFlashAttribute("state","editOK");
         }else {
             attributes.addFlashAttribute("state","editError");

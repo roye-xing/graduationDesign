@@ -34,7 +34,7 @@ public class AdminService {
         return true;
     }
     public boolean addCompany(String id,String name,String tel,String address){
-        adminDao.addCompany(id, name,tel,address);
+        adminDao.addCompany(id,name,tel,address);
         return true;
     }
     public boolean delCompany(String id){

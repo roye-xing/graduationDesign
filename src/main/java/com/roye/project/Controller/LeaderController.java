@@ -25,7 +25,7 @@ public class LeaderController {
     @Autowired
     HrService hrService;
     public boolean checkIdentify(HttpSession session){
-        if (session.getAttribute("userType").equals("admin")){
+        if (session.getAttribute("userType").equals("leader")){
             return true;
         }else {
             return false;
@@ -46,6 +46,16 @@ public class LeaderController {
         }
         return "user/leader/main";
     }
+    @RequestMapping("/leader/update")
+    public String update(String id,String name,String tel,String address,RedirectAttributes attributes){
+        if (leaderService.updateCompanyInfo(id,name, tel, address)){
+            attributes.addFlashAttribute("state","editOK");
+        }else {
+            attributes.addFlashAttribute("state","editError");
+
+        }
+        return "redirect:/leader/main";
+    }
     @RequestMapping("/leader/setting")
     public String setting(Model model){
         model.addAttribute("menu",MenuConfig.LeaderMenu());
@@ -54,7 +64,8 @@ public class LeaderController {
     @RequestMapping("/leader/takeOff")
     public String takeOff(Model model,RedirectAttributes attributes,HttpSession session){
         if(checkIdentify(session)){
-            List<TakeOff> list=leaderService.findAllTakeOff();
+            String id=(String)session.getAttribute("loginUser");
+            List<TakeOff> list=leaderService.findAllTakeOff(id);
             model.addAttribute("takeoff",list);
 
             model.addAttribute("menu",MenuConfig.LeaderMenu());
@@ -87,10 +98,16 @@ public class LeaderController {
         return "user/leader/members";
     }
     @RequestMapping("/leader/members/quit")
-    public String quit(String msg,String id){
-        leaderService.quitMember(id,msg);
+    public String quit(String msg,String id,int score){
+        leaderService.quitMember(id,msg,score);
         return "redirect:/leader/members";
     }
+    @RequestMapping("/leader/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "main/index";
+    }
+
     @RequestMapping("/leader/applicate")
     public String applicate(Model model,HttpSession session,RedirectAttributes attributes){
         if(checkIdentify(session)){

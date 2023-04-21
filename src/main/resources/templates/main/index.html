@@ -20,8 +20,8 @@
                 <p style="color: red" id="remsg" th:text="${remsg}"></p>
                 <input type="text" placeholder="用户名" name="username" required>
                 <input type="password" placeholder="密码" name="password" required>
-                <input type="tel" placeholder="电话号码" name="phone">
-                <input type="email" placeholder="电子邮箱" name="email">
+                <input type="tel" placeholder="电话号码" name="phone" required>
+                <input type="email" placeholder="电子邮箱" name="email" required>
                 <div th:id="R-kaptcha">
                     <input type="text" placeholder="请输入验证码" name="code">
                     <img th:src="@{/kaptcha}" title="点击更换!" onclick="this.src='/roye/kaptcha?d='+new Date().getTime()" alt="">
@@ -44,17 +44,17 @@
                 <!--身份选择-->
                 <div id="radio">
                     <div>
-                        <input type="radio" id="staff" name="power" value="staff" th:checked="${selected}=='staff'">
+                        <input type="radio" id="staff" name="power" value="staff" th:checked="${selected}=='staff'" required>
                         <label for="staff">员工</label>
                     </div>
 
                     <div>
-                        <input type="radio" id="hr" name="power" value="hr" th:checked="${selected}=='hr'">
+                        <input type="radio" id="hr" name="power" value="hr" th:checked="${selected}=='hr'" required>
                         <label for="hr">HR</label>
                     </div>
 
                     <div>
-                        <input type="radio" id="leader" name="power" value="leader" th:checked="${selected}=='leader'">
+                        <input type="radio" id="leader" name="power" value="leader" th:checked="${selected}=='leader'" required>
                         <label for="leader">领导</label>
                     </div>
                 </div>

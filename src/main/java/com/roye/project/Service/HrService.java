@@ -13,8 +13,8 @@ import java.util.List;
 public class HrService {
     @Autowired
     HrDao hrDao;
-    public List<Staff> findAllStaff(){
-        return hrDao.findAllStaff();
+    public List<Staff> findAllStaff(String id){
+        return hrDao.findAllStaff(id);
     }
     public boolean updateStaff(String id, String department, BigDecimal salary,BigDecimal perks){
         hrDao.updateStaff(id,department,salary,perks);
@@ -33,8 +33,12 @@ public class HrService {
         hrDao.updateEvaluate(hrEvaluate,hrScore,id);
         return true;
     }
-    public List<TakeOff> findAllTakeOff(){
-        return hrDao.findAllTakeOff();
+    public boolean delApplicate(String uuid){
+        hrDao.delApplicate(uuid);
+        return true;
+    }
+    public List<TakeOff> findAllTakeOff(String id){
+        return hrDao.findAllTakeOff(id);
     }
     public boolean updateTakeOff(int check,String uuid){
         hrDao.updateTakeOff(check,uuid);

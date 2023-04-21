@@ -78,6 +78,39 @@
         </table>
       </div>
 
+      <!--添加模态框-->
+      <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addModalLabel">添加</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/admin/company/add}" method="post">
+                <div class="form-group">
+                  <label for="companyName" class="col-form-label">公司名称</label>
+                  <input required id="companyName" type="text" max="10" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="companyTel" class="col-form-label">联系电话</label>
+                  <input id="companyTel" type="tel" name="tel" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="companyAddress" class="col-form-label">地址</label>
+                  <input id="companyAddress" type="text" name="address" class="form-control">
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" >确认</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!--修改模态框-->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

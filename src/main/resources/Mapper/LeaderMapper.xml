@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.roye.project.Dao.LeaderDao">
     <select id="findCompanyInfo" resultType="company">
-        SELECT c.id,c.`name`,c.tel,c.address,c.edit_time FROM company c LEFT JOIN users u ON c.id=u.company_id WHERE u.username=#{id}
+        SELECT c.id,c.`name`,c.tel,c.address FROM company c LEFT JOIN users u ON c.id=u.company_id WHERE u.username=#{id}
     </select>
+    <update id="updateCompanyInfo">
+        update company set name=#{name},tel=#{tel},address=#{address} where id=#{id}
+    </update>
     <resultMap id="findAllTakeOff" type="takeoff">
         <id column="id" property="id"></id>
         <result column="type" property="type"></result>
@@ -17,7 +20,7 @@
         </association>
     </resultMap>
     <select id="findAllTakeOff" resultMap="findAllTakeOff">
-        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.leader_check,t.reason,t.uuid from staff s,takeoff t where s.id=t.id
+        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.leader_check,t.reason,t.uuid from staff s,takeoff t LEFT JOIN users u ON t.id=u.username where s.id=t.id and u.company_id=(SELECT company_id FROM users where username=#{id})
     </select>
 
     <update id="updateTakeOff">
@@ -42,7 +45,7 @@
     </select>
     
     <update id="quitMember">
-        update evaluate set old_evaluate=CONCAT(old_evaluate,"\r${msg}") where id=#{id};
+        update evaluate set old_evaluate=CONCAT(old_evaluate,"\r${msg}"),old_score=#{score} where id=#{id};
         update staff set department=null,perks=null,salary=null where id=#{id};
         update users set company_id=null where username=#{id};
     </update>

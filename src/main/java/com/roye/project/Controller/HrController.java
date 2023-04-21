@@ -37,13 +37,12 @@ public class HrController {
 
     @GetMapping  ("/hr/main")
     public String main(Model model,String department,HttpSession session,RedirectAttributes attributes){
+        String id=(String)session.getAttribute("loginUser");
         if(checkIdentify(session)){
             if (department==null){
-                List<Staff> list=hrService.findAllStaff();
-                model.addAttribute("staffList",list);
+                model.addAttribute("staffList",hrService.findAllStaff(id));
             }else {
-                List<Staff> list=hrService.findStaffByNo(department);
-                model.addAttribute("staffList",list);
+                model.addAttribute("staffList",hrService.findStaffByNo(department));
             }
 
             List<Department> list1=hrService.findAllDepartment();
@@ -58,6 +57,12 @@ public class HrController {
         }
         return "user/hr/main";
     }
+    @RequestMapping("/hr/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "main/index";
+    }
+
     @RequestMapping("/hr/main/update")
     public String update(String id, BigDecimal salary, BigDecimal perks, String depa, RedirectAttributes attributes){
         if (hrService.updateStaff(id,depa,salary,perks)){
@@ -100,7 +105,8 @@ public class HrController {
     @RequestMapping("/hr/takeOff")
     public String takeOff(Model model,HttpSession session,RedirectAttributes attributes){
         if(checkIdentify(session)){
-            List<TakeOff> list=hrService.findAllTakeOff();
+            String id=(String)session.getAttribute("loginUser");
+            List<TakeOff> list=hrService.findAllTakeOff(id);
             model.addAttribute("menu",MenuConfig.HrMenu());
             model.addAttribute("takeoff",list);
         }else {
@@ -156,6 +162,20 @@ public class HrController {
         }
 
         return "user/hr/applicate";
+    }
+    @RequestMapping("/hr/applicate/delete")
+    public String deleteapp(RedirectAttributes attributes,@RequestParam String uuid,HttpSession session){
+        if(checkIdentify(session)){
+           if(hrService.delApplicate(uuid)){
+               attributes.addFlashAttribute("state","delOK");
+           }else {
+               attributes.addFlashAttribute("state","delError");
+           }
+        }else {
+            attributes.addFlashAttribute("msg","禁止越权访问");
+            return "redirect:/index";
+        }
+        return "redirect:/hr/applicate";
     }
     @RequestMapping("/hr/pay")
     public String pay(Model model){

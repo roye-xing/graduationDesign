@@ -9,8 +9,8 @@ import com.roye.project.Entity.TakeOff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,7 +23,7 @@ public class StaffService {
     public List<Staff> findById(String no){
         return staffDao.findById(no);
     }
-    public boolean update(String id, String name, String gender, Date birth,String email,String tel,boolean secrecy){
+    public boolean update(String id, String name, String gender, Date birth, String email, String tel, boolean secrecy){
         staffDao.update(id,name,gender,birth,email,tel,secrecy);
         return true;
     }

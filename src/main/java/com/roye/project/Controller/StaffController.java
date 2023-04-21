@@ -137,7 +137,12 @@ public class StaffController {
                          String gender,
                          boolean secrecy,
                          String birth,String tel,String email, RedirectAttributes attributes){
-        Date sqlDate=Date.valueOf(birth);
+        Date sqlDate=null;
+        try {
+            sqlDate=Date.valueOf(birth);
+        }catch (Exception e){
+            sqlDate=null;
+        }
         System.out.println(secrecy);
         if (name!=""){
             if (staffService.update(id, name, gender, sqlDate,email,tel,secrecy)){

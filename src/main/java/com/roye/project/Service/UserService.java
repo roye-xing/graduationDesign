@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
    @Autowired
     UserDao userDao;
-    public void add(String username,String password){
-        userDao.add(username,password);
+    public void add(String username,String password,String phone,String email){
+        userDao.add(username,password,phone,email);
     }
 
     public User login(String username,String password,String power){

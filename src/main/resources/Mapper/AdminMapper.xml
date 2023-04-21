@@ -65,8 +65,8 @@
                 address,
             </if>
         </trim>
-        <trim prefix="value(" suffix=")" suffixOverrides=",">
-            #{id},#{name}
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{id},#{name},
             <if test="tel!=null and tel!=''">
                 #{tel},
             </if>

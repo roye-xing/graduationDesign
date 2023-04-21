@@ -21,7 +21,7 @@
         </association>
     </resultMap>
     <select id="findAllStaff" resultMap="staffInDepartment">
-        SELECT s.id,s.`name`,s.sex,s.birth,d.`name` department,s.salary,s.perks FROM staff s LEFT JOIN department d ON s.department=d.`no`
+        SELECT s.id,s.`name`,s.sex,s.birth,d.`name` department,s.salary,s.perks FROM staff s LEFT JOIN department d ON s.department=d.`no` LEFT JOIN users u ON u.username=s.id right JOIN company c ON c.id=u.company_id where c.id=(SELECT company_id FROM users WHERE username=#{id})
     </select>
 
     <select id="findAllDepartment" resultType="Department">
@@ -74,13 +74,16 @@
         </association>
     </resultMap>
     <select id="findAllTakeOff" resultMap="findAllTakeOff">
-        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.hr_check,t.reason,t.uuid from staff s,takeoff t where s.id=t.id
+        select t.`id`,s.`name` name,t.type,t.reg_time,t.back_time,t.hr_check,t.reason,t.uuid from staff s,takeoff t LEFT JOIN users u ON t.id=u.username where s.id=t.id and u.company_id=(SELECT company_id FROM users where username=#{id})
     </select>
 
     <update id="updateTakeOff">
         update takeoff set hr_check=#{check} where uuid=#{uuid}
     </update>
 
+    <delete id="delApplicate">
+        delete from checkb where uuid=#{uuid};
+    </delete>
     <resultMap id="talentsInfo" type="staff">
         <id column="id" property="id"></id>
         <result column="name" property="name"></result>
@@ -119,6 +122,6 @@
     </insert>
 
     <select id="getAllRequest" resultType="request">
-        select id,`time`,`type`,IF(type='联系方式',(select phone from users where username=checkb.id),'-') as phone,IF(type='联系方式',(select email from users where username=checkb.id),'-') as email,accept1,if(type='录用','申请录用','获取联系方式') as msg from checkb where requester=#{id}
+        select id,`time`,`type`,IF(type='联系方式',(select phone from users where username=checkb.id),'-') as phone,IF(type='联系方式',(select email from users where username=checkb.id),'-') as email,accept1,if(type='录用','申请录用','获取联系方式') as msg,uuid from checkb where requester=#{id}
     </select>
 </mapper>
